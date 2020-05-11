@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <section>
+    <h1>Create Admin Account</h1>
+    <p>Note: Only the admin account can create new user accounts.</p>
+  </section>
+  <section id="createadmin" class="contact-section">
+    <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <p>{{ form.submit(class="btn btn-primary mx-auto")}}</p>
+    </form>
+  </section>
+</div>
+{% endblock %}

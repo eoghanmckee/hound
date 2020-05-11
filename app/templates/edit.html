@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <div class="row row-offcanvas row-offcanvas-left">
+    <div class="col-xs-4 col-sm-8">
+      <section>
+        <h1>Editing Case, <i>{{ case.casename }}</i>
+          <i id="myBtn" class="material-icons" style="float: right; cursor: pointer; font-size: 48px;">&#xe616;</i>
+        </h1>
+        <p>Note: All indicators must be seperated by a comma.</p>
+      </section>
+      <section id="edit" class="contact-section">
+        <form action="" method="post">
+          {{ form.hidden_tag() }}
+          <p>
+            {{ form.casename.label }}<br>
+            {{ form.casename(class="form-control form-control-small", placeholder=case.casename, readonly=true) }}
+          </p>
+          <p>
+            {{ form.slackwebhook.label }}<br>
+            {{ form.slackwebhook(class="form-control form-control-med") }}
+          </p>
+          <p>
+            {{ form.names.label }}<br>
+            {{ form.names(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.usernames.label }}<br>
+            {{ form.usernames(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.userids.label }}<br>
+            {{ form.userids(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.emails.label }}<br>
+            {{ form.emails(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.phones.label }}<br>
+            {{ form.phones(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.ips.label }}<br>
+            {{ form.ips(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.domains.label }}<br>
+            {{ form.domains(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.urls.label }}<br>
+            {{ form.urls(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.btcaddresses.label }}<br>
+            {{ form.btcaddresses(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.sha256.label }}<br>
+            {{ form.sha256(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.sha1.label }}<br>
+            {{ form.sha1(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.md5.label }}<br>
+            {{ form.md5(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.filenames.label }}<br>
+            {{ form.filenames(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.keywords.label }}<br>
+            {{ form.keywords(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+          </p>
+          <p>
+            {{ form.flashpoint() }} {{ form.flashpoint.label }}
+            {{ form.crowdstrike() }} {{ form.crowdstrike.label }}
+            {{ form.postgres() }} {{ form.postgres.label }}
+          </p>
+          <p>
+            {{ form.update(class="btn btn-primary mx-auto")}}
+            {% if case.status==1 %}{{ form.deactivate(class="btn btn-warning mx-auto")}}{%endif %}
+            {% if case.status==0 %}{{ form.activate(class="btn btn-primary mx-auto")}}{%endif %}
+            {{ form.delete(class="btn btn btn-danger mx-auto", onclick="return confirm('Confirm delete case?')")}}
+          </p>
+        </form>
+      </section>
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Indicator Events</h2>
+          </div>
+          <div class="modal-body">
+            <select class="form-control" style="width: 50px !important;" name="state" id="maxRows">
+              <option value="5000">All</option>
+              <option value="10">10</option>
+              <option value="15">15</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+              <option value="70">70</option>
+              <option value="100">100</option>
+            </select>
+            <p></p>
+            <table id="all" class="table table-striped table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th onclick="sortAllTable(0)">Time Ingested by Hound</th>
+                  <th onclick="sortAllTable(1)">Indicator</th>
+                  <th onclick="sortAllTable(2)">Event</th>
+                  <th onclick="sortAllTable(3)">Platform</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for event in events %}
+                  <td>{{ event.time }}</td>
+                  <td>{{ event.indicator }}</td>
+                  <td>{{ event.event }}</td>
+                  <td>{{ event.platform }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <div class='pagination-container'>
+              <nav>
+                <ul class="pagination">
+                  <li data-page="prev" >
+                    <span> < <span class="sr-only">(current)</span></span>
+                  </li>
+                  <li data-page="next" id="prev">
+                    <span> > <span class="sr-only">(current)</span></span>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-4 col-sm-4">
+      <section>
+        <h2>Notes</h2>
+        <form action="" method="post">
+          {{ notesform.hidden_tag() }}
+          <p>
+            {{ notesform.text(class="form-control", placeholder="Add note...") }}
+             <span id='remainingC'></span>
+          </p>
+          <p>{{ notesform.submit(class="btn btn-primary mx-auto")}}</p>
+          <div class='result'></div>
+        </form>
+        <table id="comments" class="table table-striped table-bordered">
+          {% for note in notes %}
+          <tr>
+            <td> {{ note.author }} - {{ note.createdate }}</td>
+          </tr>
+          <tr>
+            <td>{{ note.text }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </section>
+    </div>
+  </div>
+</div>
+<script src="/static/js/modal.js"></script>
+<script src="/static/js/pagination.js"></script>
+{% endblock %}

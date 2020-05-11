@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h1>Sign In</h1>
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ message }}
+  </div>
+  {% endfor %}
+  <form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.username.label }}<br>
+      {{ form.username(class="form-control mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+    </p>
+    <p>
+      {{ form.password.label }}<br>
+      {{ form.password(class="form-control mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+    </p>
+    <p>{{ form.remember_me(class="btn btn-primary mx-auto") }} {{ form.remember_me.label }}</p>
+    <p>{{ form.submit(class="btn btn-primary mx-auto")}}</p>
+  </form>
+</div>
+{% endblock %}

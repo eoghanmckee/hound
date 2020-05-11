@@ -1,0 +1,27 @@
+version: '3'
+services:
+  hound:
+    build: .
+    ports:
+      - 8080:5000
+    volumes:
+    - ./db:/home/hound/db
+    networks:
+      - backend
+    depends_on:
+      - postgres
+  postgres:
+    restart: always
+    image: postgres:11.1
+    environment:
+      - POSTGRES_USER=hound
+      - POSTGRES_PASSWORD=thisisnotprod
+      - POSTGRES_DB=hound
+    volumes:
+      - ./postgres-data/postgres:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+networks:
+  backend:

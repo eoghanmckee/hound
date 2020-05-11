@@ -1,0 +1,53 @@
+{% extends 'bootstrap/base.html' %}
+
+<head>
+  {% block styles %}
+  {{super()}}
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+  <script src="{{url_for('static', filename='js/grayscale.js')}}"></script>
+  <script src="{{url_for('static', filename='js/tables.js')}}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.png')}}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  {% endblock %}
+</head>
+{% block title %}
+{% if title %}{{ title }} - hound{% else %}Welcome to hound{% endif %}
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar-fixed-top" style="background-color: #F9F9F9;">
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <a href="{{ url_for('main.index') }}">
+        <img class="navbar-nav" src="{{url_for('static', filename='img/logo.png')}}" height="50">
+      </a>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      {% if current_user.is_anonymous %}
+          <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+        {% else %}
+          <ul class="nav navbar-nav navbar-center">
+            <form method="POST" action="/search">
+              <div class="search-box">
+                <i class="material-icons">&#xE8B6;</i>
+                <input type="text" class="form-control" placeholder="Search Indicators" name="searchterm">
+                <button type="submit" style="display: none;"></button>
+              </div>
+            </form>
+          </ul>
+          <li><a href="{{ url_for('main.index') }}">Your Cases</a></li>
+          <li><a href="{{ url_for('main.allcases') }}">All Cases</a></li>
+          <li><a href="{{ url_for('main.create') }}">Create Case</a></li>
+          <li> <a href="{{ url_for('auth.logout') }}">Logout</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+
+{% endblock %}
+{% block content %}
+{# application content needs to be provided in the app_content block #}
+{% block app_content %}
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <h1>Search Results for <i>"{{ search_term }}"</i></h1>
+  {% block page_content %}{% endblock %}
+  <br>
+  <table id="searchresults" class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th>Case ID</th>
+        <th>Case Name</th>
+        <th>Created</th>
+        <th class="text-center" width="80">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for search_result in search_results %}
+      <tr onclick="window.location.href = 'edit/{{ search_result.id }}';" style="cursor: pointer">
+        <td>{{ search_result.id }}</td>
+        <td>{{ search_result.casename }}</td>
+        <td>{{ search_result.createdate }}</td>
+        {% if search_result.status==0 %}<td align="center"><a title="Disabled"><img src='/static/img/disabled.png' height="15"></a></td>{%endif %}
+        {% if search_result.status==1 %}<td align="center"><a title="Active"><img src='/static/img/active.png' height="15"></a></td>{%endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

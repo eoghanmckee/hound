@@ -1,0 +1,25 @@
+{
+	"admin_username": "admin",
+	"admin_email": "admin@admin.com",
+	"admin_password": "password",
+
+	"postgres_host": "",
+	"postgres_port": "",
+	"postgres_user": "",
+	"postgres_pass": "",
+	"postgres_dbname": "",
+
+	"webhook_url": "",
+
+	"SECRET_KEY": "",
+
+	"POSTGRES_USER": "hound",
+	"POSTGRES_PASSWORD": "thisisnotprod",
+	"POSTGRES_HOST": "hound_postgres_1",
+	"POSTGRES_DB": "hound",
+
+	"crwd_client_id": "",
+	"crwd_client_secret": "",
+
+	"fp_bearer": ""
+}

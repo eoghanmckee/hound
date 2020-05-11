@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-8"><h1>{{ current_user.username }}'s Cases</h1></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <select class="form-control" style="width: 50px !important;" name="state" id="maxRows">
+             <option value="5000">All</option>
+             <option value="10">10</option>
+             <option value="15">15</option>
+             <option value="20">20</option>
+             <option value="50">50</option>
+             <option value="70">70</option>
+             <option value="100">100</option>
+          </select>  
+        </div>
+        <div class="col-sm-4">
+          <div class="search-box-test">
+            <i class="material-icons">&#xE8B6;</i>
+            <input type="text" id="search" class="form-control" onkeyup="searchAll()" placeholder="Filter by Case Name">
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% for message in get_flashed_messages() %}
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+      </div>
+    {% endfor %}
+
+    <table id="all" class="table table-striped table-hover table-bordered">
+      <thead>
+        <tr>
+          <th onclick="sortAllTable(0)">Case ID</th>
+          <th onclick="sortAllTable(1)">Case Name</th>
+          <th onclick="sortAllTable(2)">Created</th>
+          <th class="text-center" width="80">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for yourcase in yourcases %}
+        <tr onclick="window.location.href = 'edit/{{ yourcase.id }}';" style="cursor: pointer">
+          <td>{{ yourcase.id }}</td>
+          <td>{{ yourcase.casename }}</td>
+          <td>{{ yourcase.createdate }}</td>
+          {% if yourcase.status==0 %}<td align="center"><a title="Disabled"><img src='/static/img/disabled.png' height="15"></a></td>{%endif %}
+          {% if yourcase.status==1 %}<td align="center"><a title="Active"><img src='/static/img/active.png' height="15"></a></td>{%endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class='pagination-container'>
+      <nav>
+        <ul class="pagination">
+          <li data-page="prev" >
+            <span> < <span class="sr-only">(current)</span></span>
+          </li>
+          <li data-page="next" id="prev">
+            <span> > <span class="sr-only">(current)</span></span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<script src="/static/js/pagination.js"></script>
+{% endblock %}
