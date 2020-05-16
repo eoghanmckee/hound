@@ -12,7 +12,7 @@ class Postgreschecker(object):
 	def ioc_checker(self, all_iocs, connection, caseid):
 
 		# SQL query string declarations
-		# If you do not want a query executed for a given indicator type, leave it as an empty string, e.g. sql_str_name
+		# If you do not want a query executed for a given indicator type, leave it as an empty string
 		sql_str_sample = "SELECT * FROM table WHERE LOWER(username) IN ({}) AND event_time > timestamp - interval '1' hour"
 		sql_str_name = ""
 		sql_str_username = ""
@@ -59,8 +59,9 @@ class Postgreschecker(object):
 
 			if sql_str:
 				# Format iocs so we can just do one SQL "IN" query instead of doing individual queries
-				iocs = ','.join(str(ioc.indicator) for ioc in all_iocs[i])
+				iocs = ''.join("'{}', ".format(str(ioc.indicator)) for ioc in all_iocs[i])
 				iocs = iocs.lower()
+				iocs = iocs[:-2]
 
 				if iocs:
 					# first do a cursor fetchall so see if there are results

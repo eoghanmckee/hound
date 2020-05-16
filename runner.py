@@ -4,7 +4,6 @@ from config import Config
 from app import create_app
 from slackmessenger import Slackmessenger
 from integrations.postgreschecker import Postgreschecker
-from integrations.postgreschecker import Postgreschecker
 from integrations.flashpointchecker import Flashpointchecker
 from integrations.crowdstrikechecker import Crowdstrikechecker
 from app.models import Cases, Names, Usernames, UserIDs, \
@@ -98,7 +97,7 @@ class Runner(object):
 
 					# Run IOCs in Postgres
 					if currentcase.postgres == 1:
-						pg_results = Postgreschecker2().ioc_checker(all_iocs, user_ro_connection, case.id)
+						pg_results = Postgreschecker().ioc_checker(all_iocs, user_ro_connection, case.id)
 
 						if pg_results:
 							message += pg_results
