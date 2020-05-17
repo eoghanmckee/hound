@@ -48,7 +48,7 @@ class Postgreschecker(object):
 
 		if not connection:
 			self.app.logger.error('No Postgres Connection. Exiting.')
-			return
+			return('')
 
 		result_slack_message = ''
 		for i in all_iocs:
@@ -64,24 +64,26 @@ class Postgreschecker(object):
 				iocs = iocs[:-2]
 
 				if iocs:
-					# first do a cursor fetchall so see if there are results
-					cursor = connection.cursor()
-					sql_str = sql_str.format(iocs)
-					cursor.execute(sql_str)
+					try:
+						# first do a cursor fetchall so see if there are results
+						cursor = connection.cursor()
+						sql_str = sql_str.format(iocs)
+						cursor.execute(sql_str)
+						pg_ioc_results = cursor.fetchall()
 
-					pg_ioc_results = cursor.fetchall()
+						if pg_ioc_results:
+							# Add event to Events table
+							ioc_data = Events(datetime.now(), i, str(pg_ioc_results), 'Postgres', caseid)
+							db.session.add(ioc_data)
+							db.session.commit()
 
-					if pg_ioc_results:
-						# Add event to Events table
-						ioc_data = Events(datetime.now(), i, str(pg_ioc_results), 'Postgres', caseid)
-						db.session.add(ioc_data)
-						db.session.commit()
+							# if there are results, prettytable the output
+							cursor_pt = connection.cursor()
+							cursor_pt.execute(sql_str)
 
-						# if there are results, prettytable the output
-						cursor_pt = connection.cursor()
-						cursor_pt.execute(sql_str)
-
-						data = from_db_cursor(cursor_pt)
-						result_slack_message += data.get_string()
+							data = from_db_cursor(cursor_pt)
+							result_slack_message += data.get_string()
+					except Exception as e:
+						print("Exeception occured:{}".format(e))
 
 		return(result_slack_message)

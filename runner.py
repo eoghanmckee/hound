@@ -32,11 +32,15 @@ class Runner(object):
 
 			# initialize postgres connections
 			if self.app.config['CONFIG']['postgres_host']:
-				user_ro_connection = psycopg2.connect(host = self.app.config['CONFIG']['postgres_host'],
-					                                          database = self.app.config['CONFIG']['postgres_dbname'],
-					                                          port = self.app.config['CONFIG']['postgres_port'],
-					                                          user = self.app.config['CONFIG']['postgres_user'],
-					                                          password = self.app.config['CONFIG']['postgres_pass'])
+				try:
+					user_ro_connection = psycopg2.connect(host = self.app.config['CONFIG']['postgres_host'],
+						                                          database = self.app.config['CONFIG']['postgres_dbname'],
+						                                          port = self.app.config['CONFIG']['postgres_port'],
+						                                          user = self.app.config['CONFIG']['postgres_user'],
+						                                          password = self.app.config['CONFIG']['postgres_pass'])
+					self.app.logger.info('Postgres connection established.')
+				except Exception as e:
+					self.app.logger.error("Postgres exeception occured: {}".format(e))
 
 			for case in cases:
 				message = ''
