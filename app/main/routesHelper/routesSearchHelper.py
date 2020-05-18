@@ -82,8 +82,8 @@ def searchHelper(form, search_term):
                 Cases.query.filter_by(id=filename.caseid).all()
 
     if search_term.isdigit():
-        userids = UserIDs.query.filter_by(userid=search_term).all()
-        phones = Phones.query.filter_by(phones=search_term).all()
+        userids = UserIDs.query.filter_by(indicator=search_term).all()
+        phones = Phones.query.filter_by(indicator=search_term).all()
 
         if userids:
             for userid in userids:
