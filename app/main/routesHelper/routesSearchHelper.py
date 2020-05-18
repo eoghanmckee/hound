@@ -8,18 +8,18 @@ def searchHelper(form, search_term):
 
     # Search IOC table
     search_results += Cases.query.filter_by(casename=search_term).all()
-    names = Names.query.filter_by(name=search_term).all()
-    usernames = Usernames.query.filter_by(username=search_term).all()
-    emails = Emails.query.filter_by(emails=search_term).all()
-    keywords = Keywords.query.filter_by(keywords=search_term).all()
-    ips = IPaddresses.query.filter_by(ipaddresses=search_term).all()
-    domains = Domains.query.filter_by(domains=search_term).all()
-    urls = Urls.query.filter_by(urls=search_term).all()
-    btcs = BTCAddresses.query.filter_by(btcaddresses=search_term).all()
-    sha256s = Sha256.query.filter_by(sha256=search_term).all()
-    sha1s = Sha1.query.filter_by(sha1=search_term).all()
-    md5s = Md5.query.filter_by(md5=search_term).all()
-    filenames = Filenames.query.filter_by(filenames=search_term).all()
+    names = Names.query.filter_by(indicator=search_term).all()
+    usernames = Usernames.query.filter_by(indicator=search_term).all()
+    emails = Emails.query.filter_by(indicator=search_term).all()
+    keywords = Keywords.query.filter_by(indicator=search_term).all()
+    ips = IPaddresses.query.filter_by(indicator=search_term).all()
+    domains = Domains.query.filter_by(indicator=search_term).all()
+    urls = Urls.query.filter_by(indicator=search_term).all()
+    btcs = BTCAddresses.query.filter_by(indicator=search_term).all()
+    sha256s = Sha256.query.filter_by(indicator=search_term).all()
+    sha1s = Sha1.query.filter_by(indicator=search_term).all()
+    md5s = Md5.query.filter_by(indicator=search_term).all()
+    filenames = Filenames.query.filter_by(indicator=search_term).all()
 
     if names:
         for name in names:

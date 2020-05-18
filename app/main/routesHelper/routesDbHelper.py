@@ -6,7 +6,7 @@ from flask import request
 from urllib.parse import quote
 from app.models import SlackWebhook, Names, Usernames, UserIDs, \
     Emails, Phones, IPaddresses, Domains, Urls, BTCAddresses, Sha256, Sha1, Md5, \
-    Filenames, Keywords
+    Filenames, Keywords, Events
 
 def insertslackwebhookHelper(slackwebhook, caseid):
 
@@ -118,4 +118,5 @@ def deleteiocsHelper(id):
     Md5.query.filter_by(caseid=id).delete()
     Filenames.query.filter_by(caseid=id).delete()
     Keywords.query.filter_by(caseid=id).delete()
+    Events.query.filter_by(caseid=id).delete()
     db.session.commit()

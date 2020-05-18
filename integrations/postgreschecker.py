@@ -84,6 +84,6 @@ class Postgreschecker(object):
 							data = from_db_cursor(cursor_pt)
 							result_slack_message += data.get_string()
 					except Exception as e:
-						print("Exeception occured:{}".format(e))
+						self.app.logger.error("Exeception occured:{}".format(e))
 
 		return(result_slack_message)
