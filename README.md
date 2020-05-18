@@ -6,15 +6,11 @@
 **Hound** is an IOC monitoring tool. Hound allows users to monitor and alert on Indicators against intelligence service such as **Crowdstrike** and **Flashpoint**.
 Easily integrate Hound with your user data for monitoring bad actors on your platform.
 
-![All Cases](./app/static/screenshots/allcases.png)
-
-![Case View](./app/static/screenshots/caseview.png)
-
 ## How does Hound work?
 Every hour IOCs will be check against datasources for any new activity. If new activity is seen in the past hour, a dedicated Slack channel can be notified with details surrounding the IOC and the activity. To use Slack, add your Slack Webhook to `config.json`.
-Don't use Slack? No sweat. Hound will ingest any new activity it sees and store the details within a given Case. 
+Don't use Slack? No sweat. Hound will ingest any new activity it sees and store the details within a given Case.
 
-![Events Table](./app/static/screenshots/events.png)
+<div align="center"><img src="app/static/screenshots/houndoverview.png" width="50%" height="50%" /></div>
 
 ## Integrations
 Currently Hound supports **Crowdstrike** and **Flashpoint**, and is ready to be integrated with any Postgres data source.
@@ -58,4 +54,15 @@ Please see `integrations/flashpointchecker.py` for a working example on how each
 ## Authentication and User Management
 Users are managed by an Admin account whos credentials are declared in `config.json`. To activate the Admin account, navigate to `http://localhost:8080/auth/createadmin`. From there new users can be managed by the Admin at `http://localhost:8080/auth/users`
 
-![Users](./app/static/screenshots/users.png)
+## Screenshots
+### All Cases
+<div align="center"><img src="app/static/screenshots/allcases.png" width="50%" height="50%" /></div>
+
+### Case View
+<div align="center"><img src="app/static/screenshots/caseview.png" width="50%" height="50%" /></div>
+
+### Ingested Events
+<div align="center"><img src="app/static/screenshots/events.png" width="50%" height="50%" /></div>
+
+### Admin View
+<div align="center"><img src="app/static/screenshots/users.png" width="50%" height="50%" /></div>
