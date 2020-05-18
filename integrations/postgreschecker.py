@@ -13,37 +13,21 @@ class Postgreschecker(object):
 
 		# SQL query string declarations
 		# If you do not want a query executed for a given indicator type, leave it as an empty string
-		sql_str_sample = "SELECT * FROM table WHERE LOWER(username) IN ({}) AND event_time > timestamp - interval '1' hour"
-		sql_str_name = ""
-		sql_str_username = ""
-		sql_str_userid = ""
-		sql_str_email_src = ""
-		sql_str_phone_number = ""
-		sql_str_ip_src = ""
-		sql_str_domain = ""
-		sql_str_url = ""
-		sql_str_btc = ""
-		sql_str_sha256 = ""
-		sql_str_sha1 = ""
-		sql_str_md5 = ""
-		sql_str_filenmame = ""
-		sql_str_keyword = ""
-		
 		sql_str_matching = {
-			"name": sql_str_name,
-			"username": sql_str_username,
-			"userid": sql_str_userid,
-			"email": sql_str_email_src,
-			"phone": sql_str_phone_number,
-			"ip": sql_str_ip_src,
-			"domain": sql_str_domain,
-			"url": sql_str_url,
-			"btcaddress": sql_str_btc,
-			"sha256": sql_str_sha256,
-			"sha1": sql_str_sha1,
-			"md5": sql_str_md5,
-			"filename": sql_str_filenmame,
-			"keyword": sql_str_keyword,
+			"name": "SELECT * FROM table WHERE LOWER(name) IN ({}) AND event_time > timestamp - interval '1' hour",
+			"username": "",
+			"userid": "",
+			"email": "",
+			"phone": "",
+			"ip": "",
+			"domain": "",
+			"url": "",
+			"btcaddress": "",
+			"sha256": "",
+			"sha1": "",
+			"md5": "",
+			"filename": "",
+			"keyword": "",
 		}
 
 		if not connection:
