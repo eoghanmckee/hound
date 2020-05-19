@@ -149,20 +149,20 @@ with app.app_context():
                     db.session.commit()
 
                 flash('Account updated')
-
                 return redirect(url_for('auth.users'))
 
             # if deleting user
             if form.delete.data:
+                if user.username != 'admin':
+                    flashmessage = \
+                    'User "{}" deleted'.format(user.username)
 
-                flashmessage = \
-                'User "{}" deleted'.format(user.username)
-
-                Users.query.filter_by(id=id).delete()
-                db.session.commit()
-                flash(flashmessage)
+                    Users.query.filter_by(id=id).delete()
+                    db.session.commit()
+                    flash(flashmessage)
+                    return redirect(url_for('auth.users'))
+                flash('Cannot delete Admin!')
                 return redirect(url_for('auth.users'))
-
 
         return render_template(
             'auth/edituser.html',
