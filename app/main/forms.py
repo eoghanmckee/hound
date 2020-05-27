@@ -39,6 +39,7 @@ class CreateForm(FlaskForm):
     flashpoint = BooleanField('Flashpoint')
     crowdstrike = BooleanField('Crowdstrike')
     postgres = BooleanField('Postgres')
+    virustotal = BooleanField('VirusTotal')
 
     submit = SubmitField('Submit')
 
@@ -68,6 +69,7 @@ class UpdateForm(FlaskForm):
     flashpoint = BooleanField('Flashpoint')
     crowdstrike = BooleanField('Crowdstrike')
     postgres = BooleanField('Postgres')
+    virustotal = BooleanField('VirusTotal')
 
     update = SubmitField('Update')
     delete = SubmitField('Delete')

@@ -66,7 +66,14 @@ def create():
         else:
             postgres = 1
 
-        data = Cases(casename, creator, createdate, status, flashpoint, crowdstrike, postgres, user_id.id)
+        # Insert VirusTotal
+        virustotal = ''
+        if 'virustotal' not in request.form:
+            virustotal = 0
+        else:
+            virustotal = 1
+
+        data = Cases(casename, creator, createdate, status, flashpoint, crowdstrike, postgres, virustotal, user_id.id)
         db.session.add(data)
         db.session.commit()
 
@@ -94,6 +101,7 @@ def edit(id):
     flashpoint = case.flashpoint
     crowdstrike = case.crowdstrike
     postgres = case.postgres
+    virustotal = case.virustotal
     notes = Notes.query.filter_by(caseid=id).all()
     events = Events.query.filter_by(caseid=id).all()
 
@@ -243,6 +251,7 @@ def edit(id):
         form.flashpoint.data=flashpoint
         form.crowdstrike.data=crowdstrike
         form.postgres.data=postgres
+        form.virustotal.data=virustotal
 
 
     # if updating IOCs:
@@ -258,7 +267,6 @@ def edit(id):
             flashpoint = 0
         else:
             flashpoint = 1
-
         Cases.query.filter_by(id=id).update(dict(flashpoint=flashpoint))
 
         # Insert Crowdstrike
@@ -267,7 +275,6 @@ def edit(id):
             crowdstrike = 0
         else:
             crowdstrike = 1
-
         Cases.query.filter_by(id=id).update(dict(crowdstrike=crowdstrike))
 
         # Insert Postgres
@@ -276,8 +283,15 @@ def edit(id):
             postgres = 0
         else:
             postgres = 1
-
         Cases.query.filter_by(id=id).update(dict(postgres=postgres))
+
+        # Insert VirusTotal
+        virustotal = ''
+        if 'virustotal' not in request.form:
+            virustotal = 0
+        else:
+            virustotal = 1
+        Cases.query.filter_by(id=id).update(dict(virustotal=virustotal))
         db.session.commit()
         
        # Insert SlackWebhook

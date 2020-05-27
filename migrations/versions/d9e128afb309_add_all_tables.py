@@ -1,8 +1,8 @@
-"""creating tables
+"""add all tables
 
-Revision ID: 050b09094095
+Revision ID: d9e128afb309
 Revises: 
-Create Date: 2020-05-08 11:33:12.384992
+Create Date: 2020-05-27 12:33:38.257309
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '050b09094095'
+revision = 'd9e128afb309'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -36,6 +36,7 @@ def upgrade():
     sa.Column('flashpoint', sa.Integer(), nullable=True),
     sa.Column('crowdstrike', sa.Integer(), nullable=True),
     sa.Column('postgres', sa.Integer(), nullable=True),
+    sa.Column('virustotal', sa.Integer(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

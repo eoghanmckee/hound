@@ -41,9 +41,10 @@ class Cases(db.Model):
     flashpoint = db.Column(db.Integer)
     crowdstrike = db.Column(db.Integer)
     postgres = db.Column(db.Integer)
+    virustotal = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    def __init__(self, casename, creator, createdate, status, flashpoint, crowdstrike, postgres, user_id):
+    def __init__(self, casename, creator, createdate, status, flashpoint, crowdstrike, postgres, virustotal, user_id):
         self.casename = casename
         self.creator = creator
         self.createdate = createdate
@@ -51,6 +52,7 @@ class Cases(db.Model):
         self.flashpoint = flashpoint
         self.crowdstrike = crowdstrike
         self.postgres = postgres
+        self.virustotal = virustotal
         self.user_id = user_id
 
 class SlackWebhook(db.Model):

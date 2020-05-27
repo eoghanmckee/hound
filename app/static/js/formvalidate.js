@@ -20,6 +20,9 @@ function validate() {
   }
 
   var ips = document.myForm.ips.value;
+  if (ips === "") {
+    return(true);
+  }
   var stripped = ips.replace(/\s+/g, '')
   var ipArr = stripped.split(',');
   var k;
