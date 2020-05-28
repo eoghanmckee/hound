@@ -16,8 +16,8 @@ Don't use Slack? No sweat. Hound will ingest any new activity it sees and store 
 ### Current integrations and capabilities
 Currently Hound supports **VirusTotal**, **PolySwarm**, **Crowdstrike**, **Flashpoint**, and is ready to be integrated with any Postgres data source.
 
-|   | Postgres* | VirusTotal  | PolySwarm | CrowdStrike | Flashpoint |
-| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+|   | Postgres | VirusTotal  | PolySwarm | CrowdStrike | Flashpoint |
+| ------------- | :---:  | :---:  | :---:  | :---:  | :---:  |
 | **Name** | ✔ |  |  | ✔ | ✔ |
 | **Username** | ✔  | ✔ |  | ✔ | ✔ |
 | **UserID** | ✔ |  |  |  |  |
@@ -67,7 +67,7 @@ Please see `integrations/flashpointchecker.py` for a working example on how each
 
 ## Running Hound
 
-1. First setup your `config.json` file with all the required usernames and passwords.
+1. First setup your `config.json` file with all the required usernames, passwords, API keys etc.
 2. From the command line: `$ docker-compose up --build`
 3. Navigate to [http://localhost:8080/](http://localhost:8080/)
 
