@@ -16,7 +16,7 @@ Don't use Slack? No sweat. Hound will ingest any new activity it sees and store 
 ### Current integrations and capabilities
 Currently Hound supports **VirusTotal**, **PolySwarm**, **Crowdstrike**, **Flashpoint**, and is ready to be integrated with any Postgres data source.
 
-<div align="center">
+<center>
 
 |   | Postgres | VirusTotal  | PolySwarm | CrowdStrike | Flashpoint |
 | ------------- | :---:  | :---:  | :---:  | :---:  | :---:  |
@@ -35,7 +35,7 @@ Currently Hound supports **VirusTotal**, **PolySwarm**, **Crowdstrike**, **Flash
 | **md5** | ✔ | ✔ | ✔ | ✔ | ✔ |
 | **Filename** | ✔ | ✔ |  | ✔ | ✔ |
 
-</div>
+</center>
 
 ### Future Integrations
 To integrate other data sources, check out `runner.py` where all IOCs can be delivered to a new integration script as a Python Dictionary:
