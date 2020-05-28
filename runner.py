@@ -6,7 +6,8 @@ from slackmessenger import Slackmessenger
 from integrations.postgreschecker import Postgreschecker
 from integrations.flashpointchecker import Flashpointchecker
 from integrations.crowdstrikechecker import Crowdstrikechecker
-from integrations.virustotalchecker import Virustotalchecker
+from integrations.virustotalchecker import VirusTotalchecker
+from integrations.polyswarmchecker import PolySwarmchecker
 from app.models import Cases, Names, Usernames, UserIDs, \
     Emails, Phones, IPaddresses, Domains, Urls, BTCAddresses, Sha256, Sha1, Md5, \
     Filenames, Keywords
@@ -109,10 +110,17 @@ class Runner(object):
 
 					# Run IOCs in Virustotal
 					if currentcase.virustotal == 1:
-						vt_results = Virustotalchecker().ioc_checker(all_iocs, case.id)
+						vt_results = VirusTotalchecker().ioc_checker(all_iocs, case.id)
 
 						if vt_results:
 							message += vt_results
+
+					# Run IOCs in PolySwarm
+					# if currentcase.polyswarm == 1:
+					poly_results = PolySwarmchecker().ioc_checker(all_iocs, case.id)
+
+					if poly_results:
+						message += poly_results
 
 					# If there is IOC activity, send a message to slack
 					if message:

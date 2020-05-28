@@ -1,12 +1,12 @@
 import requests
 import json
-import time
+import calendar
 
 from app import create_app, db
 from datetime import datetime, timedelta
 from app.models import Events
 
-class Virustotalchecker(object):
+class VirusTotalchecker(object):
 
     def __init__(self):
 
@@ -15,6 +15,8 @@ class Virustotalchecker(object):
             self.vt_api_key = self.app.config['CONFIG']["vt_api_key"]
         self.vt_endpoint = 'https://www.virustotal.com/api/v3/intelligence/search?query={}'
         self.vt_gui_endpoint = 'https://www.virustotal.com/gui/file/{}'
+        self.one_hour_ago = datetime.utcnow() - timedelta(hours = 1)
+        self.one_hour_ago_epoch = calendar.timegm(self.one_hour_ago.timetuple())
 
     def ioc_checker(self, all_iocs, caseid):
 
@@ -23,9 +25,6 @@ class Virustotalchecker(object):
             return
 
         message = ''
-        hour_constant = 3600
-        current_time = time.time()
-        one_hour_ago = current_time - hour_constant
         headers = {'x-apikey': '{}'.format(self.vt_api_key)}
 
         for i in all_iocs:
@@ -45,7 +44,7 @@ class Virustotalchecker(object):
                         events = ''
                         for x in range(result_count):
                             last_modification_date = response_json['data'][x]['attributes']['last_modification_date']
-                            if (last_modification_date >= one_hour_ago):
+                            if (last_modification_date >= self.one_hour_ago_epoch):
                                 meaningful_name = response_json['data'][x]['attributes']['meaningful_name']
                                 first_submission = response_json['data'][x]['attributes']['first_submission_date']
                                 first_submission_dt = datetime.fromtimestamp(first_submission)
