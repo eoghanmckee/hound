@@ -32,7 +32,13 @@ Don't use Slack? No sweat. Hound will ingest any new activity it sees and store 
 | ** md5 ** | ✔ | ✔ | ✔ | ✔ | ✔ |
 | ** Filename ** | ✔ | ✔ |  | ✔ | ✔ |
 
-### Further Ingegrations
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
+
+### Future Integrations
 To integrate other data sources, check out `runner.py` where all IOCs can be delivered to a new integration script as a Python Dictionary:
 
 ```
