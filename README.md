@@ -14,29 +14,24 @@ Don't use Slack? No sweat. Hound will ingest any new activity it sees and store 
 
 ## Integrations
 ### Current integrations and capabilities
+Currently Hound supports **VirusTotal**, **PolySwarm**, **Crowdstrike**, **Flashpoint**, and is ready to be integrated with any Postgres data source.
 
-|   | ** Postgres ** | ** VirusTotal **  | ** PolySwarm **  | ** CrowdStrike ** | ** Flashpoint ** |
-| ------------- | ------------- | ------------- | ------------- |
-| ** Name ** | ✔ | ✔ |  | ✔ | ✔ |
-| ** Username ** | ✔  | ✔ |  | ✔ | ✔ |
-| ** UserID ** | ✔ |  |  |  |  |
-| ** Email ** | ✔ | ✔ |  | ✔ | ✔ |
-| ** Phone ** | ✔ | ✔ |  | ✔ | ✔ |
-| ** IPAddress ** | ✔ | ✔ |  | ✔ | ✔ |
-| ** Keyword ** | ✔ | ✔  | ✔ | ✔ | ✔ |
-| ** Domain ** | ✔ | ✔ |  | ✔ | ✔ |
-| ** URL ** | ✔ | ✔ |  | ✔ | ✔ |
-| ** BTC Address ** | ✔ | ✔ |  | ✔ | ✔ |
-| ** sha256 ** | ✔ | ✔ | ✔ | ✔ | ✔ |
-| ** sha1 ** | ✔ | ✔ | ✔ | ✔ | ✔ |
-| ** md5 ** | ✔ | ✔ | ✔ | ✔ | ✔ |
-| ** Filename ** | ✔ | ✔ |  | ✔ | ✔ |
-
-
-|   | Postgres | VirusTotal  | PolySwarm | CrowdStrike | Flashpoint |
-| ------------- | ------------- |
-| Content Cell  | Content Cell  | Content Cell  | Content Cell  | Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  | Content Cell  | Content Cell  | Content Cell  | Content Cell  |
+|   | Postgres* | VirusTotal  | PolySwarm | CrowdStrike | Flashpoint |
+| ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
+| **Name** | ✔ |  |  | ✔ | ✔ |
+| **Username** | ✔  | ✔ |  | ✔ | ✔ |
+| **UserID** | ✔ |  |  |  |  |
+| **Email** | ✔ |  |  | ✔ | ✔ |
+| **Phone** | ✔ |  |  | ✔ | ✔ |
+| **IPAddress** | ✔ | ✔ | ✔ | ✔ | ✔ |
+| **Keyword** | ✔ | ✔  | ✔ | ✔ | ✔ |
+| **Domain** | ✔ | ✔ |  | ✔ | ✔ |
+| **URL** | ✔ | ✔ |  | ✔ | ✔ |
+| **BTC Address** | ✔ |  |  | ✔ | ✔ |
+| **sha256** | ✔ | ✔ | ✔ | ✔ | ✔ |
+| **sha1** | ✔ | ✔ | ✔ | ✔ | ✔ |
+| **md5** | ✔ | ✔ | ✔ | ✔ | ✔ |
+| **Filename** | ✔ | ✔ |  | ✔ | ✔ |
 
 ### Future Integrations
 To integrate other data sources, check out `runner.py` where all IOCs can be delivered to a new integration script as a Python Dictionary:
