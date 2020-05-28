@@ -13,7 +13,26 @@ Don't use Slack? No sweat. Hound will ingest any new activity it sees and store 
 <div align="center"><img src="app/static/screenshots/houndoverview.png" width="50%" height="50%" /></div>
 
 ## Integrations
-Currently Hound supports **Crowdstrike**, **Flashpoint**, and **VirusTotal**, and is ready to be integrated with any Postgres data source.
+### Current integrations and capabilities
+
+|   | ** Postgres ** | ** VirusTotal **  | ** PolySwarm **  | ** CrowdStrike ** | ** Flashpoint ** |
+| ------------- | ------------- | ------------- | ------------- |
+| ** Name ** | ✔ | ✔ |  | ✔ | ✔ |
+| ** Username ** | ✔  | ✔ |  | ✔ | ✔ |
+| ** UserID ** | ✔ |  |  |  |  |
+| ** Email ** | ✔ | ✔ |  | ✔ | ✔ |
+| ** Phone ** | ✔ | ✔ |  | ✔ | ✔ |
+| ** IPAddress ** | ✔ | ✔ |  | ✔ | ✔ |
+| ** Keyword ** | ✔ | ✔  | ✔ | ✔ | ✔ |
+| ** Domain ** | ✔ | ✔ |  | ✔ | ✔ |
+| ** URL ** | ✔ | ✔ |  | ✔ | ✔ |
+| ** BTC Address ** | ✔ | ✔ |  | ✔ | ✔ |
+| ** sha256 ** | ✔ | ✔ | ✔ | ✔ | ✔ |
+| ** sha1 ** | ✔ | ✔ | ✔ | ✔ | ✔ |
+| ** md5 ** | ✔ | ✔ | ✔ | ✔ | ✔ |
+| ** Filename ** | ✔ | ✔ |  | ✔ | ✔ |
+
+### Further Ingegrations
 To integrate other data sources, check out `runner.py` where all IOCs can be delivered to a new integration script as a Python Dictionary:
 
 ```
