@@ -3,7 +3,7 @@
 <div align="center"><img src="app/static/img/hound.png" /></div>
 
 ## What is Hound?
-**Hound** is an IOC monitoring tool. Hound allows users to monitor and alert on Indicators against intelligence service such as **Crowdstrike**, **Flashpoint**, and **VirusTotal**.
+**Hound** is an IOC monitoring tool. Hound allows users to monitor and alert on Indicators against intelligence service such as **VirusTotal**, **PolySwarm**, **Crowdstrike**, and **Flashpoint**.
 Easily integrate Hound with your user data for monitoring bad actors on your platform.
 
 ## How does Hound work?
@@ -15,6 +15,8 @@ Don't use Slack? No sweat. Hound will ingest any new activity it sees and store 
 ## Integrations
 ### Current integrations and capabilities
 Currently Hound supports **VirusTotal**, **PolySwarm**, **Crowdstrike**, **Flashpoint**, and is ready to be integrated with any Postgres data source.
+
+<div align="center">
 
 |   | Postgres | VirusTotal  | PolySwarm | CrowdStrike | Flashpoint |
 | ------------- | :---:  | :---:  | :---:  | :---:  | :---:  |
@@ -32,6 +34,8 @@ Currently Hound supports **VirusTotal**, **PolySwarm**, **Crowdstrike**, **Flash
 | **sha1** | ✔ | ✔ | ✔ | ✔ | ✔ |
 | **md5** | ✔ | ✔ | ✔ | ✔ | ✔ |
 | **Filename** | ✔ | ✔ |  | ✔ | ✔ |
+
+</div>
 
 ### Future Integrations
 To integrate other data sources, check out `runner.py` where all IOCs can be delivered to a new integration script as a Python Dictionary:
