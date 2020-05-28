@@ -33,10 +33,10 @@ Don't use Slack? No sweat. Hound will ingest any new activity it sees and store 
 | ** Filename ** | ✔ | ✔ |  | ✔ | ✔ |
 
 
-| First Header  | Second Header |
+|   | Postgres | VirusTotal  | PolySwarm | CrowdStrike | Flashpoint |
 | ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  | Content Cell  | Content Cell  | Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  | Content Cell  | Content Cell  | Content Cell  | Content Cell  |
 
 ### Future Integrations
 To integrate other data sources, check out `runner.py` where all IOCs can be delivered to a new integration script as a Python Dictionary:
