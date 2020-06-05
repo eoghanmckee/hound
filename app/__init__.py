@@ -48,5 +48,5 @@ def runner():
 
 # init BackgroundScheduler job - run every 1 hour
 scheduler = BackgroundScheduler()
-scheduler.add_job(runner, trigger='interval', minutes=1)
+scheduler.add_job(runner, trigger='interval', minutes=60)
 scheduler.start()

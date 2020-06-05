@@ -53,6 +53,7 @@ class Runner(object):
 					if not bearer_token:
 						bearer_token = Crowdstrikechecker().crwd_token_generator()
 				if currentcase.status == 1:
+					self.app.logger.info('Checking CaseID: {}'.format(case.id))
 
 					# gather iocs
 					names = Names.query.filter_by(caseid=case.id).all()

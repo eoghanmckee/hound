@@ -22,5 +22,6 @@
 	"crwd_client_secret": "",
 
 	"fp_bearer": "",
-	"vt_api_key": ""
+	"vt_api_key": "",
+	"poly_api_key": ""
 }

@@ -32,8 +32,14 @@ class PolySwarmchecker(object):
             if i in poly_checklist:
                 for ioc_data in all_iocs[i]:
                     events = ''
+                    meta_results = ''
                     ioc = ioc_data.indicator
-                    meta_results = api.search_by_metadata(ioc)
+
+                    try:
+                        meta_results += api.search_by_metadata(ioc)
+                    except Exception as e:
+                        self.app.logger.error("Polyswarm exeception occured: {}".format(e))
+
                     if meta_results:
                         for meta_result in meta_results:
                             results = api.search(meta_result.sha256)

@@ -11,7 +11,7 @@ from app.main.routesHelper.routesDbHelper import insertslackwebhookHelper, inser
 from app.main.routesHelper.routesSearchHelper import searchHelper
 from flask import render_template, flash, redirect, url_for, request, \
     current_app
-from app.main.forms import SearchForm, CreateForm, UpdateForm, NotesForm
+from app.main.forms import SearchForm, CreateForm, NotesForm
 from app.models import Users, Cases, SlackWebhook, Names, Usernames, UserIDs, \
     Emails, Phones, IPaddresses, Domains, Urls, BTCAddresses, Sha256, Sha1, Md5, \
     Filenames, Keywords, Notes, Events
@@ -225,7 +225,7 @@ def edit(id):
 
     # Get form data
 
-    form = UpdateForm()
+    form = CreateForm()
     notesform = NotesForm()
 
     # load page content if GET request

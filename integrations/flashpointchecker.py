@@ -34,7 +34,7 @@ class Flashpointchecker(object):
                 status_code = response.status_code
 
                 if status_code != 200:
-                    self.app.logger.error('Encountered Error: {}'.format(status_code))
+                    self.app.logger.error('Encountered Error at Flashpoint Endpoint: {}'.format(status_code))
 
                 response_json = response.json()
                 total_hits = len(response_json)

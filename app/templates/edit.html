@@ -16,71 +16,28 @@
             {{ form.casename.label }}<br>
             {{ form.casename(class="form-control form-control-small", placeholder=case.casename, readonly=true) }}
           </p>
+          {% for field in form %}
+            {% if field.name != 'csrf_token' and field.name != 'casename' and field.type == "TextAreaField"%}
+              <p>
+                {{ field.label() }} <br>
+                {{ field(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
+                {% for error in field.errors %}
+                  <div class="error">{{ error }}</div>
+                {% endfor %}
+              </p>
+            {% endif %}
+          {% endfor %}
           <p>
-            {{ form.slackwebhook.label }}<br>
-            {{ form.slackwebhook(class="form-control form-control-med") }}
-          </p>
-          <p>
-            {{ form.names.label }}<br>
-            {{ form.names(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.usernames.label }}<br>
-            {{ form.usernames(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.userids.label }}<br>
-            {{ form.userids(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.emails.label }}<br>
-            {{ form.emails(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.phones.label }}<br>
-            {{ form.phones(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.ips.label }}<br>
-            {{ form.ips(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.domains.label }}<br>
-            {{ form.domains(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.urls.label }}<br>
-            {{ form.urls(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.btcaddresses.label }}<br>
-            {{ form.btcaddresses(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.sha256.label }}<br>
-            {{ form.sha256(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.sha1.label }}<br>
-            {{ form.sha1(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.md5.label }}<br>
-            {{ form.md5(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.filenames.label }}<br>
-            {{ form.filenames(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.keywords.label }}<br>
-            {{ form.keywords(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0") }}
-          </p>
-          <p>
-            {{ form.flashpoint() }} {{ form.flashpoint.label }}
-            {{ form.crowdstrike() }} {{ form.crowdstrike.label }}
-            {{ form.postgres() }} {{ form.postgres.label }}
-            {{ form.virustotal() }} {{ form.virustotal.label }}
+          {% for field in form %}
+            {% if field.name != 'csrf_token' and field.name != 'submit' and field.type == "BooleanField"%}
+              {{ field.label() }}
+              {{ field }}
+              |
+              {% for error in field.errors %}
+                <div class="error">{{ error }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
           </p>
           <p>
             {{ form.update(class="btn btn-primary mx-auto")}}

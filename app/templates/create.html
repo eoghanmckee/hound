@@ -10,80 +10,30 @@
   <section id="create" class="contact-section">
     <form action="" method="post">
       {{ form.hidden_tag() }}
+      {% for field in form %}
+        {% if field.name != 'csrf_token' and field.type == "TextAreaField"%}
+          <p>
+            {{ field.label() }} <br>
+            {{ field(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter "+field.name+"...") }}
+            {% for error in field.errors %}
+              <div class="error">{{ error }}</div>
+            {% endfor %}
+          </p>
+        {% endif %}
+      {% endfor %}
       <p>
-        {{ form.casename.label }}<br>
-        {{ form.casename(class="form-control form-control-small", placeholder="Enter Case Name...") }}
-        {% for error in form.casename.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-      </p>
-      <p>
-        {{ form.slackwebhook.label }}<br>
-        {{ form.slackwebhook(class="form-control form-control-small", placeholder="If empty, default Hound Channel will be used") }}
-      </p>
-      <p>
-        {{ form.names.label }}<br>
-        {{ form.names(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter first name last name...") }}
-      </p>
-      <p>
-        {{ form.usernames.label }}<br>
-        {{ form.usernames(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter usernames...") }}
-      </p>
-      <p>
-        {{ form.userids.label }}<br>
-        {{ form.userids(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter userids...") }}
-      </p>
-      <p>
-        {{ form.emails.label }}<br>
-        {{ form.emails(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter emails...") }}
-      </p>
-      <p>
-        {{ form.phones.label }}<br>
-        {{ form.phones(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter phone numbers...") }}
-      </p>
-      <p>
-        {{ form.ips.label }}<br>
-        {{ form.ips(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter IP addresses...") }}
-      </p>
-      <p>
-        {{ form.domains.label }}<br>
-        {{ form.domains(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter Domains...") }}
-      </p>
-      <p>
-        {{ form.urls.label }}<br>
-        {{ form.urls(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter Urls...") }}
-      </p>
-      <p>
-        {{ form.btcaddresses.label }}<br>
-        {{ form.btcaddresses(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter Bitcoin Addresses...") }}
-      </p>
-      <p>
-        {{ form.sha256.label }}<br>
-        {{ form.sha256(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter Sha256...") }}
-      </p>
-      <p>
-        {{ form.sha1.label }}<br>
-        {{ form.sha1(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter Sha1...") }}
-      </p>
-      <p>
-        {{ form.md5.label }}<br>
-        {{ form.md5(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter md5...") }}
-      </p>
-      <p>
-        {{ form.filenames.label }}<br>
-        {{ form.filenames(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter Filenames...") }}
-      </p>
-      <p>
-        {{ form.keywords.label }}<br>
-        {{ form.keywords(class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0", placeholder="Enter keywords...") }}
-      </p>
-      <p>
-        {{ form.flashpoint() }} {{ form.flashpoint.label }}
-        {{ form.crowdstrike() }} {{ form.crowdstrike.label }}
-        {{ form.postgres() }} {{ form.postgres.label }}
-        {{ form.virustotal() }} {{ form.virustotal.label }}
-      </p>
-      <p>{{ form.submit(class="btn btn-primary mx-auto")}}</p>
+      {% for field in form %}
+        {% if field.name != 'csrf_token' and field.type == "BooleanField"%}
+          {{ field.label() }}
+          {{ field }}
+          |
+          {% for error in field.errors %}
+            <div class="error">{{ error }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </p>
+    <p>{{ form.submit(class="btn btn-primary mx-auto")}}</p>
     </form>
   </section>
 </div>

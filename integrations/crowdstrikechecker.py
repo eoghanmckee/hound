@@ -43,7 +43,7 @@ class Crowdstrikechecker(object):
                 status_code = response.status_code
 
                 if status_code != 200:
-                    self.app.logger.error('Encountered Error: {}'.format(status_code))
+                    self.app.logger.error('Encountered Error at Crowstrike Endoint: {}'.format(status_code))
 
                 if status_code == 200:
                     response_json = response.json()

@@ -1,4 +1,4 @@
-# Hound - Indicator Monitoring
+# Hound - Targetted Indicator Retrohunting
 
 <div align="center"><img src="app/static/img/hound.png" /></div>
 
@@ -19,14 +19,14 @@ Currently Hound supports **VirusTotal**, **PolySwarm**, **Crowdstrike**, **Flash
 |   | Postgres | VirusTotal  | PolySwarm | CrowdStrike | Flashpoint |
 | ------------- | :---:  | :---:  | :---:  | :---:  | :---:  |
 | **Name** | ✔ |  |  | ✔ | ✔ |
-| **Username** | ✔  | ✔ |  | ✔ | ✔ |
+| **Username** | ✔ | ✔ |  | ✔ | ✔ |
 | **UserID** | ✔ |  |  |  |  |
 | **Email** | ✔ |  |  | ✔ | ✔ |
 | **Phone** | ✔ |  |  | ✔ | ✔ |
 | **IPAddress** | ✔ | ✔ | ✔ | ✔ | ✔ |
 | **Keyword** | ✔ | ✔  | ✔ | ✔ | ✔ |
-| **Domain** | ✔ | ✔ |  | ✔ | ✔ |
-| **URL** | ✔ | ✔ |  | ✔ | ✔ |
+| **Domain** | ✔ |  |  | ✔ | ✔ |
+| **URL** | ✔ |  |  | ✔ | ✔ |
 | **BTC Address** | ✔ |  |  | ✔ | ✔ |
 | **sha256** | ✔ | ✔ | ✔ | ✔ | ✔ |
 | **sha1** | ✔ | ✔ | ✔ | ✔ | ✔ |
@@ -72,7 +72,9 @@ Please see `integrations/flashpointchecker.py` for a working example on how each
 3. Navigate to [http://localhost:8080/](http://localhost:8080/)
 
 ## Authentication and User Management
-Users are managed by an Admin account whos credentials are declared in `config.json`. To activate the Admin account, navigate to `http://localhost:8080/auth/createadmin`. From there new users can be managed by the Admin at `http://localhost:8080/auth/users`
+Auth is janky, but works. Users are managed by an Admin account whos credentials are declared in `config.json`. To activate the Admin account, navigate to `http://localhost:8080/auth/createadmin`. From there new users can be managed by the Admin at `http://localhost:8080/auth/users`
+
+It's recommended to deploy this with some sort of identity management integrations e.g. SSO + SAML.
 
 ## Screenshots
 ### All Cases
