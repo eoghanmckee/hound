@@ -8,6 +8,7 @@ from integrations.flashpointchecker import Flashpointchecker
 from integrations.crowdstrikechecker import Crowdstrikechecker
 from integrations.virustotalchecker import VirusTotalchecker
 from integrations.polyswarmchecker import PolySwarmchecker
+from integrations.osintgoogle import OSINTGoogle
 from app.models import Cases, Names, Usernames, UserIDs, \
     Emails, Phones, IPaddresses, Domains, Urls, BTCAddresses, Sha256, Sha1, Md5, \
     Filenames, Keywords
@@ -17,9 +18,10 @@ class Runner(object):
 	def __init__(self):
 		self.app = create_app()
 
-	def iocanalysis(self, config_class=Config):
+	def iocanalysis(self, interval, config_class=Config):
 
 		with self.app.app_context():
+			self.app.logger.info(interval)
 			self.app.logger.info('Checking IOCs...')
 			cases = Cases.query.all()
 
@@ -88,40 +90,49 @@ class Runner(object):
 						"filename": filenames
 					}
 
-					# Run IOCs in Crowdstrike
-					if currentcase.crowdstrike == 1 and bearer_token:
-						crwd_results = Crowdstrikechecker().ioc_checker(bearer_token, all_iocs, case.id)
+					if interval == 1:
+						# Run IOCs in Crowdstrike
+						if currentcase.crowdstrike == 1 and bearer_token:
+							crwd_results = Crowdstrikechecker().ioc_checker(bearer_token, all_iocs, case.id)
 
-						if crwd_results:
-								message += crwd_results
+							if crwd_results:
+									message += crwd_results
 
-					# Run IOCs in Flashpoint
-					if currentcase.flashpoint == 1:
-						fp_results = Flashpointchecker().ioc_checker(all_iocs, case.id)
+						# Run IOCs in Flashpoint
+						if currentcase.flashpoint == 1:
+							fp_results = Flashpointchecker().ioc_checker(all_iocs, case.id)
 
-						if fp_results:
-							message += fp_results
+							if fp_results:
+								message += fp_results
 
-					# Run IOCs in Postgres
-					if currentcase.postgres == 1:
-						pg_results = Postgreschecker().ioc_checker(all_iocs, user_ro_connection, case.id)
+						# Run IOCs in Postgres
+						if currentcase.postgres == 1:
+							pg_results = Postgreschecker().ioc_checker(all_iocs, user_ro_connection, case.id)
 
-						if pg_results:
-							message += pg_results
+							if pg_results:
+								message += pg_results
 
-					# Run IOCs in Virustotal
-					if currentcase.virustotal == 1:
-						vt_results = VirusTotalchecker().ioc_checker(all_iocs, case.id)
+						# Run IOCs in Virustotal
+						if currentcase.virustotal == 1:
+							vt_results = VirusTotalchecker().ioc_checker(all_iocs, case.id)
 
-						if vt_results:
-							message += vt_results
+							if vt_results:
+								message += vt_results
 
-					# Run IOCs in PolySwarm
-					# if currentcase.polyswarm == 1:
-					poly_results = PolySwarmchecker().ioc_checker(all_iocs, case.id)
+						# Run IOCs in PolySwarm
+						if currentcase.polyswarm == 1:
+							poly_results = PolySwarmchecker().ioc_checker(all_iocs, case.id)
 
-					if poly_results:
-						message += poly_results
+							if poly_results:
+								message += poly_results
+
+					if interval == 24:
+						# Run IOCs in GoogleCSE
+						if currentcase.googlecse == 1:
+							osintgoogle_results = OSINTGoogle().ioc_checker(all_iocs, case.id)
+
+							if osintgoogle_results:
+								message += osintgoogle_results
 
 					# If there is IOC activity, send a message to slack
 					if message:

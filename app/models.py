@@ -42,9 +42,11 @@ class Cases(db.Model):
     crowdstrike = db.Column(db.Integer)
     postgres = db.Column(db.Integer)
     virustotal = db.Column(db.Integer)
+    polyswarm = db.Column(db.Integer)
+    googlecse = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    def __init__(self, casename, creator, createdate, status, flashpoint, crowdstrike, postgres, virustotal, user_id):
+    def __init__(self, casename, creator, createdate, status, flashpoint, crowdstrike, postgres, virustotal, polyswarm, googlecse, user_id):
         self.casename = casename
         self.creator = creator
         self.createdate = createdate
@@ -53,6 +55,8 @@ class Cases(db.Model):
         self.crowdstrike = crowdstrike
         self.postgres = postgres
         self.virustotal = virustotal
+        self.polyswarm = polyswarm
+        self.googlecse = googlecse
         self.user_id = user_id
 
 class SlackWebhook(db.Model):
@@ -219,6 +223,17 @@ class Filenames(db.Model):
 
     def __init__(self, indicator, caseid):
         self.indicator = indicator
+        self.caseid = caseid
+
+class IOCMatches(db.Model):
+    __tablename__ = 'iocmatches'
+
+    id = db.Column(db.Integer, primary_key=True)
+    osintgoogle = db.Column(db.Text)
+    caseid = db.Column(db.Integer, db.ForeignKey("cases.id"))
+
+    def __init__(self, osintgoogle, caseid):
+        self.osintgoogle = osintgoogle
         self.caseid = caseid
 
 class Notes(db.Model):

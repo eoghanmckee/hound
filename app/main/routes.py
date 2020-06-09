@@ -73,7 +73,20 @@ def create():
         else:
             virustotal = 1
 
-        data = Cases(casename, creator, createdate, status, flashpoint, crowdstrike, postgres, virustotal, user_id.id)
+        # Insert Polyswarm
+        polyswarm = ''
+        if 'polyswarm' not in request.form:
+            polyswarm = 0
+        else:
+            polyswarm = 1
+
+        googlecse = ''
+        if 'googlecse' not in request.form:
+            googlecse = 0
+        else:
+            googlecse = 1
+
+        data = Cases(casename, creator, createdate, status, flashpoint, crowdstrike, postgres, virustotal, polyswarm, googlecse, user_id.id)
         db.session.add(data)
         db.session.commit()
 
@@ -98,12 +111,14 @@ def create():
 def edit(id):
     
     case = Cases.query.filter_by(id=id).first()
+    notes = Notes.query.filter_by(caseid=id).all()
+    events = Events.query.filter_by(caseid=id).all()
     flashpoint = case.flashpoint
     crowdstrike = case.crowdstrike
     postgres = case.postgres
     virustotal = case.virustotal
-    notes = Notes.query.filter_by(caseid=id).all()
-    events = Events.query.filter_by(caseid=id).all()
+    polyswarm = case.polyswarm
+    googlecse = case.googlecse
 
     slackwebhook_string = ''
     slackwebhook = SlackWebhook.query.filter_by(caseid=id).first()
@@ -252,6 +267,8 @@ def edit(id):
         form.crowdstrike.data=crowdstrike
         form.postgres.data=postgres
         form.virustotal.data=virustotal
+        form.polyswarm.data=polyswarm
+        form.googlecse.data=googlecse
 
 
     # if updating IOCs:
@@ -292,6 +309,21 @@ def edit(id):
         else:
             virustotal = 1
         Cases.query.filter_by(id=id).update(dict(virustotal=virustotal))
+
+        # Insert Polyswarm
+        polyswarm = ''
+        if 'polyswarm' not in request.form:
+            polyswarm = 0
+        else:
+            polyswarm = 1
+        Cases.query.filter_by(id=id).update(dict(polyswarm=polyswarm))
+
+        googlecse = ''
+        if 'googlecse' not in request.form:
+            googlecse = 0
+        else:
+            googlecse = 1
+        Cases.query.filter_by(id=id).update(dict(googlecse=googlecse))
         db.session.commit()
         
        # Insert SlackWebhook
@@ -304,7 +336,7 @@ def edit(id):
         flashmessage = \
                 'Case "{}" updated'.format(case.casename)
         flash(flashmessage)
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.edit', id=id))
 
     if notesform.submit.data:
         text = request.form['text']
@@ -344,7 +376,7 @@ def edit(id):
                 'Case "{}" deactivated'.format(case.casename)
 
         flash(flashmessage)
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.edit', id=id))
 
     if form.activate.data:
         case = Cases.query.filter_by(id=id).one()

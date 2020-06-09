@@ -39,6 +39,8 @@ class CreateForm(FlaskForm):
     crowdstrike = BooleanField('Crowdstrike')
     postgres = BooleanField('Postgres')
     virustotal = BooleanField('VirusTotal')
+    polyswarm = BooleanField('Polyswarm')
+    googlecse = BooleanField('Google CSE')
 
     submit = SubmitField('Submit')
     update = SubmitField('Update')

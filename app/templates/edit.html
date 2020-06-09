@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
+  {% for message in get_flashed_messages() %}
+    <div class="alert alert-success">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}
+    </div>
+  {% endfor %}
   <div class="row row-offcanvas row-offcanvas-left">
     <div class="col-xs-4 col-sm-8">
       <section>

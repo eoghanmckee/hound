@@ -11,7 +11,7 @@ Mako==1.0.7
 python-dateutil
 python-dotenv==0.7.1
 pytz==2017.2
-requests==2.18.4
+requests==2.22.0
 six==1.11.0
 SQLAlchemy==1.1.14
 urllib3==1.22
@@ -20,3 +20,4 @@ WTForms==2.1
 apscheduler
 prettytable
 polyswarm-api
+google-api-python-client

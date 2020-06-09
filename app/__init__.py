@@ -42,11 +42,18 @@ def create_app(config_class=Config):
 from app import models
 from runner import Runner
 
-def runner():
+def runner1hour():
+    Runner().iocanalysis(1)
 
-    Runner().iocanalysis()
+def runner24hour():
+    Runner().iocanalysis(24)
 
 # init BackgroundScheduler job - run every 1 hour
-scheduler = BackgroundScheduler()
-scheduler.add_job(runner, trigger='interval', minutes=60)
-scheduler.start()
+scheduler1hour = BackgroundScheduler()
+scheduler1hour.add_job(runner1hour, trigger='interval', hours=1)
+scheduler1hour.start()
+
+# init BackgroundScheduler job - run every 24 hour
+scheduler24hour = BackgroundScheduler()
+scheduler24hour.add_job(runner24hour, trigger='interval', hours=24)
+scheduler24hour.start()

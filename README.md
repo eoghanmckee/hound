@@ -7,7 +7,7 @@
 Easily integrate Hound with your user data for monitoring bad actors on your platform.
 
 ## How does Hound work?
-Every hour IOCs will be check against datasources for any new activity. If new activity is seen in the past hour, a dedicated Slack channel can be notified with details surrounding the IOC and the activity. To use Slack, add your Slack Webhook to `config.json`.
+Intel sources will be checked every hour for any new activity, and every 24 hours for Google CSE. If new activity is seen in the past hour, a dedicated Slack channel can be notified with details surrounding the IOC and the activity. To use Slack, add your Slack Webhook to `config.json`.
 Don't use Slack? No sweat. Hound will ingest any new activity it sees and store the details within a given Case.
 
 <div align="center"><img src="app/static/screenshots/houndoverview.png" width="50%" height="50%" /></div>
@@ -16,22 +16,22 @@ Don't use Slack? No sweat. Hound will ingest any new activity it sees and store 
 ### Current integrations and capabilities
 Currently Hound supports **VirusTotal**, **PolySwarm**, **Crowdstrike**, **Flashpoint**, and is ready to be integrated with any Postgres data source.
 
-|   | Postgres | VirusTotal  | PolySwarm | CrowdStrike | Flashpoint |
-| ------------- | :---:  | :---:  | :---:  | :---:  | :---:  |
-| **Name** | ✔ |  |  | ✔ | ✔ |
-| **Username** | ✔ | ✔ |  | ✔ | ✔ |
-| **UserID** | ✔ |  |  |  |  |
-| **Email** | ✔ |  |  | ✔ | ✔ |
-| **Phone** | ✔ |  |  | ✔ | ✔ |
-| **IPAddress** | ✔ | ✔ | ✔ | ✔ | ✔ |
-| **Keyword** | ✔ | ✔  | ✔ | ✔ | ✔ |
-| **Domain** | ✔ |  |  | ✔ | ✔ |
-| **URL** | ✔ |  |  | ✔ | ✔ |
-| **BTC Address** | ✔ |  |  | ✔ | ✔ |
-| **sha256** | ✔ | ✔ | ✔ | ✔ | ✔ |
-| **sha1** | ✔ | ✔ | ✔ | ✔ | ✔ |
-| **md5** | ✔ | ✔ | ✔ | ✔ | ✔ |
-| **Filename** | ✔ | ✔ |  | ✔ | ✔ |
+|   | Postgres | VirusTotal  | PolySwarm | CrowdStrike | Flashpoint | Google CSE |
+| ------------- | :---:  | :---:  | :---:  | :---:  | :---:  |  :---:  |
+| **Name** | ✔ |  |  | ✔ | ✔ |  |
+| **Username** | ✔ | ✔ |  | ✔ | ✔ |  |
+| **UserID** | ✔ |  |  |  |  |  |
+| **Email** | ✔ |  |  | ✔ | ✔ |  |
+| **Phone** | ✔ |  |  | ✔ | ✔ |  |
+| **IPAddress** | ✔ | ✔ | ✔ | ✔ | ✔ |  |
+| **Keyword** | ✔ | ✔  | ✔ | ✔ | ✔ | ✔ |
+| **Domain** | ✔ |  |  | ✔ | ✔ |  |
+| **URL** | ✔ |  |  | ✔ | ✔ |  |
+| **BTC Address** | ✔ |  |  | ✔ | ✔ |  |
+| **sha256** | ✔ | ✔ | ✔ | ✔ | ✔ |  |
+| **sha1** | ✔ | ✔ | ✔ | ✔ | ✔ |  |
+| **md5** | ✔ | ✔ | ✔ | ✔ | ✔ |  |
+| **Filename** | ✔ | ✔ |  | ✔ | ✔ |  |
 
 ### Future Integrations
 To integrate other data sources, check out `runner.py` where all IOCs can be delivered to a new integration script as a Python Dictionary:

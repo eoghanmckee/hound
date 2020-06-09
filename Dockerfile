@@ -9,7 +9,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install gunicorn pymysql
 
 RUN apk update && \
-    apk add --virtual build-deps gcc python-dev musl-dev && \
+    apk add --virtual build-deps gcc musl-dev && \
     apk add postgresql-dev
 
 RUN apk add --update
