@@ -18,21 +18,20 @@ Currently Hound supports **VirusTotal**, **PolySwarm**, **Crowdstrike**, **Flash
 
 |   | Postgres (1hr)| VirusTotal (1hr) | PolySwarm (1hr) | CrowdStrike (1hr) | Flashpoint (1hr) | Google CSE (24hr)|
 | ------------- | :---:  | :---:  | :---:  | :---:  | :---:  | :---:  |
-| **Name** |  |  |  | ✔ | ✔ |  |
+| **Name** | ✔ |  |  | ✔ | ✔ |  |
 | **Username** | ✔ |  |  | ✔ | ✔ |  |
 | **UserID** | ✔ |  |  |  |  |  |
 | **Email** | ✔ |  |  | ✔ | ✔ |  |
 | **Phone** | ✔ |  |  | ✔ | ✔ |  |
 | **IPAddress** | ✔ |  |  | ✔ | ✔ |  |
-| **AnonymousID** | ✔ |  |  |  |  |  |
-| **Domain** |  |  |  | ✔ | ✔ |  |
-| **URL** |  |  |  | ✔ | ✔ |  |
-| **BTC Address** |  |  |  | ✔ | ✔ |  |
-| **sha256** |  | ✔ | ✔ | ✔ | ✔ |  |
-| **sha1** |  | ✔ | ✔ | ✔ | ✔ |  |
-| **md5** |  | ✔ | ✔ | ✔ | ✔ |  |
-| **Filename** |  | ✔ |  | ✔ | ✔ |  |
-| **Keyword** |  | ✔ | ✔ | ✔ | ✔ | ✔ |
+| **Domain** | ✔ |  |  | ✔ | ✔ |  |
+| **URL** | ✔ |  |  | ✔ | ✔ |  |
+| **BTC Address** | ✔ |  |  | ✔ | ✔ |  |
+| **sha256** | ✔ | ✔ | ✔ | ✔ | ✔ |  |
+| **sha1** | ✔ | ✔ | ✔ | ✔ | ✔ |  |
+| **md5** | ✔ | ✔ | ✔ | ✔ | ✔ |  |
+| **Filename** | ✔ | ✔ |  | ✔ | ✔ |  |
+| **Keyword** | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
 
 ## Running Hound
 
