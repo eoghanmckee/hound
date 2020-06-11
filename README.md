@@ -45,7 +45,9 @@ Currently Hound supports **VirusTotal**, **PolySwarm**, **Crowdstrike**, **Flash
 Users are managed by an Admin account whos credentials are declared in `config/config.json`. To activate the Admin account, navigate to `http://localhost:8080/auth/createadmin`. From there new users can be managed by the Admin at `http://localhost:8080/auth/users`
 
 ## Future Integrations
-There are two options when adding a new integrations, 1. give the end user an option to run IOCs in your new Ingegration, and 2. no case-level integration option and have IOCs run against the new integration without end user input.
+There are two options when adding a new integrations;
+1. give the end user an option to run IOCs in your new Integration
+2. no case-level integration option and have IOCs run against the new Integration without end user input.
 
 ### No Case-Level Integration Checkbox
 By not having the case-level option, getting set up is pretty easy. All IOCs can be delivered to a new integration script as a Python Dictionary from `runner.py`, as shown below. You have two interval options in runner, run an integration every 1 hour, or every 24 hours.
