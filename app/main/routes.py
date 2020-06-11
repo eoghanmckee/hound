@@ -83,12 +83,6 @@ def edit(id):
     case = Cases.query.filter_by(id=id).first()
     notes = Notes.query.filter_by(caseid=id).all()
     events = Events.query.filter_by(caseid=id).all()
-    flashpoint = case.flashpoint
-    crowdstrike = case.crowdstrike
-    postgres = case.postgres
-    virustotal = case.virustotal
-    polyswarm = case.polyswarm
-    googlecse = case.googlecse
 
     slackwebhook_string = ''
     slackwebhook = SlackWebhook.query.filter_by(caseid=id).first()
@@ -217,12 +211,12 @@ def edit(id):
         form.md5.data=md5s_string
         form.filenames.data=filenames_string
         form.keywords.data=keywords_string
-        form.flashpoint.data=flashpoint
-        form.crowdstrike.data=crowdstrike
-        form.postgres.data=postgres
-        form.virustotal.data=virustotal
-        form.polyswarm.data=polyswarm
-        form.googlecse.data=googlecse
+        form.flashpoint.data=case.flashpoint
+        form.crowdstrike.data=case.crowdstrike
+        form.postgres.data=case.postgres
+        form.virustotal.data=case.virustotal
+        form.polyswarm.data=case.polyswarm
+        form.googlecse.data=case.googlecse
 
     # if updating IOCs:
     if form.update.data:
