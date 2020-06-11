@@ -45,49 +45,19 @@ def create():
         user_id = Users.query.filter_by(username=current_user.username).first()
         casename = request.form['casename']
         creator = current_user.username
-        createdate = datetime.today().strftime('%Y-%m-%d')
-        status = 1
 
-        flashpoint = ''
-        if 'flashpoint' not in request.form:
-            flashpoint = 0
-        else:
-            flashpoint = 1
-
-        crowdstrike = ''
-        if 'crowdstrike' not in request.form:
-            crowdstrike = 0
-        else:
-            crowdstrike = 1
-
-        postgres = ''
-        if 'postgres' not in request.form:
-            postgres = 0
-        else:
-            postgres = 1
-
-        # Insert VirusTotal
-        virustotal = ''
-        if 'virustotal' not in request.form:
-            virustotal = 0
-        else:
-            virustotal = 1
-
-        # Insert Polyswarm
-        polyswarm = ''
-        if 'polyswarm' not in request.form:
-            polyswarm = 0
-        else:
-            polyswarm = 1
-
-        googlecse = ''
-        if 'googlecse' not in request.form:
-            googlecse = 0
-        else:
-            googlecse = 1
-
-        data = Cases(casename, creator, createdate, status, flashpoint, crowdstrike, postgres, virustotal, polyswarm, googlecse, user_id.id)
-        db.session.add(data)
+        integrations_list = []
+        for field in form:
+            if field.type == "BooleanField":
+                integrations_list.append(field.name)
+        integrations_tuple = tuple(integrations_list)
+        data = {field:int(field in request.form) for field in integrations_tuple}
+        data['casename'] = casename
+        data['creator'] = creator
+        data['createdate'] = datetime.today().strftime('%Y-%m-%d')
+        data['status'] = 1
+        data['user_id'] = user_id.id
+        db.session.add(Cases(**data))
         db.session.commit()
 
         case = Cases.query.filter_by(casename=casename).first()
@@ -127,7 +97,6 @@ def edit(id):
         slackwebhook_string = str(slackwebhook.slackwebhook)
 
     # get names
-
     names_string = ''
     names = Names.query.filter_by(caseid=id).all()
     for name in names:
@@ -135,7 +104,6 @@ def edit(id):
     names_string = names_string[:-2] # removing the last comma and trailing space
 
     # get usernames
-
     usernames_string = ''
     usernames = Usernames.query.filter_by(caseid=id).all()
     for username in usernames:
@@ -143,7 +111,6 @@ def edit(id):
     usernames_string = usernames_string[:-2]
 
     # get userids
-
     userids_string = ''
     userids = UserIDs.query.filter_by(caseid=id).all()
     for userid in userids:
@@ -151,7 +118,6 @@ def edit(id):
     userids_string = userids_string[:-2]
 
     # get emails
-
     emails_string = ''
     emails = Emails.query.filter_by(caseid=id).all()
     for email in emails:
@@ -159,7 +125,6 @@ def edit(id):
     emails_string = emails_string[:-2]
 
     # get phones
-
     phones_string = ''
     phones = Phones.query.filter_by(caseid=id).all()
     for phone in phones:
@@ -167,7 +132,6 @@ def edit(id):
     phones_string = phones_string[:-2]
 
     # get ips
-
     ips_string = ''
     ips = IPaddresses.query.filter_by(caseid=id).all()
     for ip in ips:
@@ -175,7 +139,6 @@ def edit(id):
     ips_string = ips_string[:-2]
 
     # get domains
-
     domains_string = ''
     domains = Domains.query.filter_by(caseid=id).all()
     for domain in domains:
@@ -183,7 +146,6 @@ def edit(id):
     domains_string = domains_string[:-2]
 
     # get urls
-
     urls_string = ''
     urls = Urls.query.filter_by(caseid=id).all()
     for url in urls:
@@ -191,7 +153,6 @@ def edit(id):
     urls_string = urls_string[:-2]
 
     # get btcaddresses
-
     btcaddresses_string = ''
     btcaddresses = BTCAddresses.query.filter_by(caseid=id).all()
     for btcaddress in btcaddresses:
@@ -199,7 +160,6 @@ def edit(id):
     btcaddresses_string = btcaddresses_string[:-2]
 
     # get sha256
-
     sha256s_string = ''
     sha256s = Sha256.query.filter_by(caseid=id).all()
     for sha256 in sha256s:
@@ -207,7 +167,6 @@ def edit(id):
     sha256s_string = sha256s_string[:-2]
 
     # get sha1
-
     sha1s_string = ''
     sha1s = Sha1.query.filter_by(caseid=id).all()
     for sha1 in sha1s:
@@ -215,7 +174,6 @@ def edit(id):
     sha1s_string = sha1s_string[:-2]
 
     # get md5
-
     md5s_string = ''
     md5s = Md5.query.filter_by(caseid=id).all()
     for md5 in md5s:
@@ -223,7 +181,6 @@ def edit(id):
     md5s_string = md5s_string[:-2]
 
     # get filenames
-
     filenames_string = ''
     filenames = Filenames.query.filter_by(caseid=id).all()
     for filename in filenames:
@@ -231,7 +188,6 @@ def edit(id):
     filenames_string = filenames_string[:-2]
 
     # get keywords
-
     keywords_string = ''
     keywords = Keywords.query.filter_by(caseid=id).all()
     for keyword in keywords:
@@ -239,12 +195,10 @@ def edit(id):
     keywords_string = keywords_string[:-2]
 
     # Get form data
-
     form = CreateForm()
     notesform = NotesForm()
 
     # load page content if GET request
-
     if request.method == 'GET':
     
         # prepopulate the form with existing iocs
@@ -270,60 +224,19 @@ def edit(id):
         form.polyswarm.data=polyswarm
         form.googlecse.data=googlecse
 
-
     # if updating IOCs:
-
     if form.update.data:
 
         # delete all case iocs prior to updating the case - yep, i know
         deleteiocsHelper(id)
 
-        # Insert Flashpoint
-        flashpoint = ''
-        if 'flashpoint' not in request.form:
-            flashpoint = 0
-        else:
-            flashpoint = 1
-        Cases.query.filter_by(id=id).update(dict(flashpoint=flashpoint))
-
-        # Insert Crowdstrike
-        crowdstrike = ''
-        if 'crowdstrike' not in request.form:
-            crowdstrike = 0
-        else:
-            crowdstrike = 1
-        Cases.query.filter_by(id=id).update(dict(crowdstrike=crowdstrike))
-
-        # Insert Postgres
-        postgres = ''
-        if 'postgres' not in request.form:
-            postgres = 0
-        else:
-            postgres = 1
-        Cases.query.filter_by(id=id).update(dict(postgres=postgres))
-
-        # Insert VirusTotal
-        virustotal = ''
-        if 'virustotal' not in request.form:
-            virustotal = 0
-        else:
-            virustotal = 1
-        Cases.query.filter_by(id=id).update(dict(virustotal=virustotal))
-
-        # Insert Polyswarm
-        polyswarm = ''
-        if 'polyswarm' not in request.form:
-            polyswarm = 0
-        else:
-            polyswarm = 1
-        Cases.query.filter_by(id=id).update(dict(polyswarm=polyswarm))
-
-        googlecse = ''
-        if 'googlecse' not in request.form:
-            googlecse = 0
-        else:
-            googlecse = 1
-        Cases.query.filter_by(id=id).update(dict(googlecse=googlecse))
+        integrations_list = []
+        for field in form:
+            if field.type == "BooleanField":
+                integrations_list.append(field.name)
+        integrations_tuple = tuple(integrations_list)
+        integrations = {field:int(field in request.form) for field in integrations_tuple}
+        Cases.query.filter_by(id=id).update(integrations)
         db.session.commit()
         
        # Insert SlackWebhook

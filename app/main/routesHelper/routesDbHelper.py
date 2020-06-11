@@ -6,7 +6,7 @@ from flask import request
 from urllib.parse import quote
 from app.models import SlackWebhook, Names, Usernames, UserIDs, \
     Emails, Phones, IPaddresses, Domains, Urls, BTCAddresses, Sha256, Sha1, Md5, \
-    Filenames, Keywords, Events
+    Filenames, Keywords, Events, IOCMatches
 
 def insertslackwebhookHelper(slackwebhook, caseid):
 
@@ -68,7 +68,7 @@ def deleteiocsHelper(id):
 
     tables = ['SlackWebhook', 'Names', 'Usernames', 'UserIDs', 'Emails', 'Phones', \
     'IPaddresses', 'Domains', 'Urls', 'BTCAddresses', 'Sha256', 'Sha1', \
-    'Md5', 'Filenames', 'Keywords', 'Events']
+    'Md5', 'Filenames', 'Keywords', 'Events', 'IOCMatches']
 
     for table in tables:
         table = eval(table)

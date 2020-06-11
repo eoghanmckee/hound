@@ -21,12 +21,8 @@ class OSINTGoogle(object):
         if not self.google_api_key:
             self.app.logger.error('No Google API Key. Exiting.')
             return
-
-        google_checklist = {
-            "keyword": True,
-        }
-
         message = ''
+        google_checklist = ['keyword']
 
         for i in all_iocs:
             if i in google_checklist:

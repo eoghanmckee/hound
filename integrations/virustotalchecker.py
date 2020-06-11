@@ -26,15 +26,8 @@ class VirusTotalchecker(object):
             self.app.logger.error('No Virustotal API Key. Exiting.')
             return
 
-        vt_checklist = {
-            "sha256": True,
-            "sha1": True,
-            "md5": True,
-            "filename": True,
-            "keyword": True,
-        }
-
         message = ''
+        vt_checklist = ['sha256', 'sha1', 'md5', 'filename','keyword']
         headers = {'x-apikey': '{}'.format(self.vt_api_key)}
 
         for i in all_iocs:

@@ -17,16 +17,9 @@ class PolySwarmchecker(object):
         self.one_hour_ago_epoch = calendar.timegm(self.one_hour_ago.timetuple())
 
     def ioc_checker(self, all_iocs, caseid):
-
-        api = PolyswarmAPI(key=self.poly_api_key)
         message = ''
-
-        poly_checklist = {
-            "sha256": True,
-            "sha1": True,
-            "md5": True,
-            "keyword": True,
-        }
+        api = PolyswarmAPI(key=self.poly_api_key)
+        poly_checklist = ['sha256', 'sha1', 'md5', 'keyword']
 
         for i in all_iocs:
             if i in poly_checklist:
