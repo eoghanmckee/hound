@@ -84,139 +84,122 @@ def edit(id):
     notes = Notes.query.filter_by(caseid=id).all()
     events = Events.query.filter_by(caseid=id).all()
 
-    slackwebhook_string = ''
-    slackwebhook = SlackWebhook.query.filter_by(caseid=id).first()
-
-    if slackwebhook:
-        slackwebhook_string = str(slackwebhook.slackwebhook)
-
-    # get names
-    names_string = ''
-    names = Names.query.filter_by(caseid=id).all()
-    for name in names:
-        names_string += str(name.indicator) + ', '
-    names_string = names_string[:-2] # removing the last comma and trailing space
-
-    # get usernames
-    usernames_string = ''
-    usernames = Usernames.query.filter_by(caseid=id).all()
-    for username in usernames:
-        usernames_string += str(username.indicator) + ', '
-    usernames_string = usernames_string[:-2]
-
-    # get userids
-    userids_string = ''
-    userids = UserIDs.query.filter_by(caseid=id).all()
-    for userid in userids:
-        userids_string += str(userid.indicator) + ', '
-    userids_string = userids_string[:-2]
-
-    # get emails
-    emails_string = ''
-    emails = Emails.query.filter_by(caseid=id).all()
-    for email in emails:
-        emails_string += str(email.indicator) + ', '
-    emails_string = emails_string[:-2]
-
-    # get phones
-    phones_string = ''
-    phones = Phones.query.filter_by(caseid=id).all()
-    for phone in phones:
-        phones_string += str(phone.indicator) + ', '
-    phones_string = phones_string[:-2]
-
-    # get ips
-    ips_string = ''
-    ips = IPaddresses.query.filter_by(caseid=id).all()
-    for ip in ips:
-        ips_string += str(ip.indicator) + ', '
-    ips_string = ips_string[:-2]
-
-    # get domains
-    domains_string = ''
-    domains = Domains.query.filter_by(caseid=id).all()
-    for domain in domains:
-        domains_string += unquote(domain.indicator) + ', '
-    domains_string = domains_string[:-2]
-
-    # get urls
-    urls_string = ''
-    urls = Urls.query.filter_by(caseid=id).all()
-    for url in urls:
-        urls_string += unquote(url.indicator) + ', '
-    urls_string = urls_string[:-2]
-
-    # get btcaddresses
-    btcaddresses_string = ''
-    btcaddresses = BTCAddresses.query.filter_by(caseid=id).all()
-    for btcaddress in btcaddresses:
-        btcaddresses_string += str(btcaddress.indicator) + ', '
-    btcaddresses_string = btcaddresses_string[:-2]
-
-    # get sha256
-    sha256s_string = ''
-    sha256s = Sha256.query.filter_by(caseid=id).all()
-    for sha256 in sha256s:
-        sha256s_string += str(sha256.indicator) + ', '
-    sha256s_string = sha256s_string[:-2]
-
-    # get sha1
-    sha1s_string = ''
-    sha1s = Sha1.query.filter_by(caseid=id).all()
-    for sha1 in sha1s:
-        sha1s_string += str(sha1.indicator) + ', '
-    sha1s_string = sha1s_string[:-2]
-
-    # get md5
-    md5s_string = ''
-    md5s = Md5.query.filter_by(caseid=id).all()
-    for md5 in md5s:
-        md5s_string += str(md5.indicator) + ', '
-    md5s_string = md5s_string[:-2]
-
-    # get filenames
-    filenames_string = ''
-    filenames = Filenames.query.filter_by(caseid=id).all()
-    for filename in filenames:
-        filenames_string += str(filename.indicator) + ', '
-    filenames_string = filenames_string[:-2]
-
-    # get keywords
-    keywords_string = ''
-    keywords = Keywords.query.filter_by(caseid=id).all()
-    for keyword in keywords:
-        keywords_string += str(keyword.indicator) + ', '
-    keywords_string = keywords_string[:-2]
-
     # Get form data
     form = CreateForm()
     notesform = NotesForm()
 
-    # load page content if GET request
+    # prepopulate the form if GET request
     if request.method == 'GET':
+        form.slackwebhook.data = ''
+        slackwebhook = SlackWebhook.query.filter_by(caseid=id).first()
+
+        if slackwebhook:
+            form.slackwebhook.data = str(slackwebhook.slackwebhook)
+
+        # get names
+        names_string = ''
+        names = Names.query.filter_by(caseid=id).all()
+        for name in names:
+            names_string += str(name.indicator) + ', '
+        form.names.data = names_string[:-2] # removing the last comma and trailing space
+
+        # get usernames
+        usernames_string = ''
+        usernames = Usernames.query.filter_by(caseid=id).all()
+        for username in usernames:
+            usernames_string += str(username.indicator) + ', '
+        form.usernames.data = usernames_string[:-2]
+
+        # get userids
+        userids_string = ''
+        userids = UserIDs.query.filter_by(caseid=id).all()
+        for userid in userids:
+            userids_string += str(userid.indicator) + ', '
+        form.userids.data = userids_string[:-2]
+
+        # get emails
+        emails_string = ''
+        emails = Emails.query.filter_by(caseid=id).all()
+        for email in emails:
+            emails_string += str(email.indicator) + ', '
+        form.emails.data = emails_string[:-2]
+
+        # get phones
+        phones_string = ''
+        phones = Phones.query.filter_by(caseid=id).all()
+        for phone in phones:
+            phones_string += str(phone.indicator) + ', '
+        form.phones.data = phones_string[:-2]
+
+        # get ips
+        ips_string = ''
+        ips = IPaddresses.query.filter_by(caseid=id).all()
+        for ip in ips:
+            ips_string += str(ip.indicator) + ', '
+        form.ips.data = ips_string[:-2]
+
+        # get domains
+        domains_string = ''
+        domains = Domains.query.filter_by(caseid=id).all()
+        for domain in domains:
+            domains_string += unquote(domain.indicator) + ', '
+        form.domains.data = domains_string[:-2]
+
+        # get urls
+        urls_string = ''
+        urls = Urls.query.filter_by(caseid=id).all()
+        for url in urls:
+            urls_string += unquote(url.indicator) + ', '
+        form.urls.data = urls_string[:-2]
+
+        # get btcaddresses
+        btcaddresses_string = ''
+        btcaddresses = BTCAddresses.query.filter_by(caseid=id).all()
+        for btcaddress in btcaddresses:
+            btcaddresses_string += str(btcaddress.indicator) + ', '
+        form.btcaddresses.data = btcaddresses_string[:-2]
+
+        # get sha256
+        sha256s_string = ''
+        sha256s = Sha256.query.filter_by(caseid=id).all()
+        for sha256 in sha256s:
+            sha256s_string += str(sha256.indicator) + ', '
+        form.sha256.data = sha256s_string[:-2]
+
+        # get sha1
+        sha1s_string = ''
+        sha1s = Sha1.query.filter_by(caseid=id).all()
+        for sha1 in sha1s:
+            sha1s_string += str(sha1.indicator) + ', '
+        form.sha1.data = sha1s_string[:-2]
+
+        # get md5
+        md5s_string = ''
+        md5s = Md5.query.filter_by(caseid=id).all()
+        for md5 in md5s:
+            md5s_string += str(md5.indicator) + ', '
+        form.md5.data = md5s_string[:-2]
+
+        # get filenames
+        filenames_string = ''
+        filenames = Filenames.query.filter_by(caseid=id).all()
+        for filename in filenames:
+            filenames_string += str(filename.indicator) + ', '
+        form.filenames.data = filenames_string[:-2]
+
+        # get keywords
+        keywords_string = ''
+        keywords = Keywords.query.filter_by(caseid=id).all()
+        for keyword in keywords:
+            keywords_string += str(keyword.indicator) + ', '
+        form.keywords.data = keywords_string[:-2]
     
-        # prepopulate the form with existing iocs
-        form.slackwebhook.data=slackwebhook_string
-        form.names.data=names_string
-        form.usernames.data=usernames_string
-        form.userids.data=userids_string
-        form.emails.data=emails_string
-        form.phones.data=phones_string
-        form.ips.data=ips_string
-        form.domains.data=domains_string
-        form.urls.data=urls_string
-        form.btcaddresses.data=btcaddresses_string
-        form.sha256.data=sha256s_string
-        form.sha1.data=sha1s_string
-        form.md5.data=md5s_string
-        form.filenames.data=filenames_string
-        form.keywords.data=keywords_string
         form.flashpoint.data=case.flashpoint
         form.crowdstrike.data=case.crowdstrike
         form.postgres.data=case.postgres
         form.virustotal.data=case.virustotal
         form.polyswarm.data=case.polyswarm
-        form.googlecse.data=case.googlecse
+        form.googlecse.data=case.googlecse     
 
     # if updating IOCs:
     if form.update.data:
@@ -300,28 +283,10 @@ def edit(id):
         'edit.html',
         title='Edit Case',
         case=case,
-        slackwebhook=slackwebhook_string,
-        names_string=names_string,
-        usernames_string=usernames_string,
-        userids_string=userids_string,
-        emails_string=emails_string,
-        phones_string=phones_string,
-        ips_string=ips_string,
-        domains_string=domains_string,
-        urls_string=urls_string,
-        btcaddresses=btcaddresses,
-        sha256s_string=sha256s_string,
-        sha1s_string=sha1s_string,
-        md5s_string=md5s_string,
-        filenames_string=filenames_string,
-        keywords_string=keywords_string,
         form=form,
         notesform=notesform,
         notes=notes,
-        events=events,
-        names=names,
-        usernames=usernames,
-        userids=userids
+        events=events
         )
 
 
