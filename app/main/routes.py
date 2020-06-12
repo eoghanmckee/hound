@@ -204,6 +204,19 @@ def edit(id):
     # if updating IOCs:
     if form.update.data:
 
+        # Warn if Slack Webhook changed by someone other than the case owner
+        existing_slackwebhook = SlackWebhook.query.filter_by(caseid=id).first()
+        if existing_slackwebhook is None:
+            existing_slackwebhook = ''
+
+        new_slackwebhook = request.form['slackwebhook']
+        current_userid = Users.query.filter_by(username=current_user.username).first()
+        case_owner = Users.query.filter_by(id=case.user_id).first()
+
+        if new_slackwebhook != existing_slackwebhook and current_userid.id != case.user_id:
+           slack_message = 'WARNING: Slack Webhook changed for {}\'s case, \'{}\', by user {}'.format(case_owner.username, case.casename, current_user.username)
+           Slackmessenger().insidermessenger(slack_message)
+
         # delete all case iocs prior to updating the case - yep, i know
         deleteiocsHelper(id)
 
@@ -215,7 +228,7 @@ def edit(id):
         integrations = {field:int(field in request.form) for field in integrations_tuple}
         Cases.query.filter_by(id=id).update(integrations)
         db.session.commit()
-        
+
        # Insert SlackWebhook
         slackwebhook = request.form['slackwebhook']
         insertslackwebhookHelper(slackwebhook, id)

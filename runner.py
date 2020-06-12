@@ -58,36 +58,21 @@ class Runner(object):
 					self.app.logger.info('Checking CaseID: {}'.format(case.id))
 
 					# gather iocs
-					names = Names.query.filter_by(caseid=case.id).all()
-					usernames = Usernames.query.filter_by(caseid=case.id).all()
-					userids = UserIDs.query.filter_by(caseid=case.id).all()
-					emails = Emails.query.filter_by(caseid=case.id).all()
-					phones = Phones.query.filter_by(caseid=case.id).all()
-					ips = IPaddresses.query.filter_by(caseid=case.id).all()
-					keywords = Keywords.query.filter_by(caseid=case.id).all()
-					domains = Domains.query.filter_by(caseid=case.id).all()
-					urls = Urls.query.filter_by(caseid=case.id).all()
-					btcaddresses = BTCAddresses.query.filter_by(caseid=case.id).all()
-					sha256s = Sha256.query.filter_by(caseid=case.id).all()
-					sha1s = Sha1.query.filter_by(caseid=case.id).all()
-					md5s = Md5.query.filter_by(caseid=case.id).all()
-					filenames = Filenames.query.filter_by(caseid=case.id).all()
-
 					all_iocs = {
-						"name": names,
-						"username": usernames,
-						"userid": userids,
-						"email": emails,
-						"phone": phones,
-						"ip": ips,
-						"keyword": keywords,
-						"domain": domains,
-						"url": urls,
-						"btcaddress": btcaddresses,
-						"sha256": sha256s,
-						"sha1": sha1s,
-						"md5": md5s,
-						"filename": filenames
+						"name": Names.query.filter_by(caseid=case.id).all(),
+						"username": Usernames.query.filter_by(caseid=case.id).all(),
+						"userid": Emails.query.filter_by(caseid=case.id).all(),
+						"email": Emails.query.filter_by(caseid=case.id).all(),
+						"phone": Phones.query.filter_by(caseid=case.id).all(),
+						"ip": IPaddresses.query.filter_by(caseid=case.id).all(),
+						"keyword": Keywords.query.filter_by(caseid=case.id).all(),
+						"domain": Domains.query.filter_by(caseid=case.id).all(),
+						"url": Urls.query.filter_by(caseid=case.id).all(),
+						"btcaddress": BTCAddresses.query.filter_by(caseid=case.id).all(),
+						"sha256": Sha256.query.filter_by(caseid=case.id).all(),
+						"sha1": Sha1.query.filter_by(caseid=case.id).all(),
+						"md5": Md5.query.filter_by(caseid=case.id).all(),
+						"filename": Filenames.query.filter_by(caseid=case.id).all()
 					}
 
 					if interval == 1:

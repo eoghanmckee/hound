@@ -44,6 +44,14 @@ class Slackmessenger(object):
             webhook_url = self.webhook_url
         return webhook_url
 
+    def insidermessenger(self, message):
+        data = {
+            'text': '{}'.format(message)
+        }
+        if self.webhook_url:
+            response = requests.post(self.webhook_url, data=json.dumps(
+                data), headers={'Content-Type': 'application/json'})
+
     def posttoslack(self, data, webhook_url):
         if not webhook_url:
             self.app.logger.error('No Slack Webhook provided!')
