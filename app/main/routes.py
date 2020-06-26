@@ -14,8 +14,7 @@ from flask import render_template, flash, redirect, url_for, request, \
 from app.main.forms import SearchForm, CreateForm, NotesForm
 from app.models import Users, Cases, SlackWebhook, Names, Usernames, UserIDs, \
     Emails, Phones, IPaddresses, Domains, Urls, BTCAddresses, Sha256, Sha1, Md5, \
-    Filenames, Keywords, Notes, Events
-
+    Filenames, Keywords, Notes, Events, IOCMatches
 
 @bp.route('/')
 @bp.route('/index')
@@ -33,7 +32,6 @@ def allcases():
     cases = Cases.query.all()
     return render_template('allcases.html', title='All Cases',
                            cases=cases)
-
 
 @bp.route('/create', methods=['GET', 'POST'])
 @login_required
@@ -74,7 +72,6 @@ def create():
         return redirect('index')
     return render_template('create.html', title='Create Case',
                            form=form)
-
 
 @bp.route('/edit/<id>', methods=['GET', 'POST'])
 @login_required
@@ -214,7 +211,7 @@ def edit(id):
         case_owner = Users.query.filter_by(id=case.user_id).first()
 
         if new_slackwebhook != existing_slackwebhook and current_userid.id != case.user_id:
-           slack_message = 'WARNING: Slack Webhook changed for {}\'s case, \'{}\', by user {}'.format(case_owner.username, case.casename, current_user.username)
+           slack_message = 'WARNING: Slack Webhook changed for {}\'s case, \'{}\', by user {}'.format(case_owner.email, case.casename, current_user.email)
            Slackmessenger().insidermessenger(slack_message)
 
         # delete all case iocs prior to updating the case - yep, i know
@@ -229,7 +226,7 @@ def edit(id):
         Cases.query.filter_by(id=id).update(integrations)
         db.session.commit()
 
-       # Insert SlackWebhook
+        # Insert SlackWebhook
         slackwebhook = request.form['slackwebhook']
         insertslackwebhookHelper(slackwebhook, id)
 
@@ -267,6 +264,12 @@ def edit(id):
         Cases.query.filter_by(id=id).delete()
         db.session.commit()
 
+        Events.query.filter_by(id=id).delete()
+        db.session.commit()
+
+        IOCMatches.query.filter_by(id=id).delete()
+        db.session.commit()
+
         flash(flashmessage)
         return redirect(url_for('main.index'))
 
@@ -301,7 +304,6 @@ def edit(id):
         notes=notes,
         events=events
         )
-
 
 @bp.route('/search', methods=['GET', 'POST'])
 @login_required

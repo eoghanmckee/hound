@@ -50,10 +50,10 @@ def runner24hour():
 
 # init BackgroundScheduler job - run every 1 hour
 scheduler1hour = BackgroundScheduler()
-scheduler1hour.add_job(runner1hour, trigger='interval', hours=1)
+scheduler1hour.add_job(runner1hour, 'cron', hour='*')
 scheduler1hour.start()
 
 # init BackgroundScheduler job - run every 24 hour
 scheduler24hour = BackgroundScheduler()
-scheduler24hour.add_job(runner24hour, trigger='interval', hours=24)
+scheduler24hour.add_job(runner24hour, 'cron', day='*')
 scheduler24hour.start()

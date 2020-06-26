@@ -2,7 +2,7 @@ from flask import request
 from flask_wtf import FlaskForm
 from app.models import Users, Cases
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, PasswordField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, ValidationError
 
 
 class LoginForm(FlaskForm):
@@ -47,6 +47,11 @@ class CreateForm(FlaskForm):
     delete = SubmitField('Delete')
     deactivate = SubmitField('Deactivate')
     activate = SubmitField('Activate')
+
+    def validate_casename(self, casename):
+        casename = Cases.query.filter_by(casename=casename.data).first()
+        if casename is not None:
+            raise ValidationError('Please use a different casename.')
 
 class NotesForm(FlaskForm):
 

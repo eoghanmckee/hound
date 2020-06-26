@@ -68,7 +68,7 @@ def deleteiocsHelper(id):
 
     tables = ['SlackWebhook', 'Names', 'Usernames', 'UserIDs', 'Emails', 'Phones', \
     'IPaddresses', 'Domains', 'Urls', 'BTCAddresses', 'Sha256', 'Sha1', \
-    'Md5', 'Filenames', 'Keywords', 'Events', 'IOCMatches']
+    'Md5', 'Filenames', 'Keywords']
 
     for table in tables:
         table = eval(table)
