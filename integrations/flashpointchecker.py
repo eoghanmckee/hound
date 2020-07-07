@@ -60,9 +60,10 @@ class Flashpointchecker(object):
 
                             events += event
 
-                        # Add event to Events table
-                        ioc_data = Events(datetime.now(), ioc, events, 'Flashpoint', caseid)
-                        db.session.add(ioc_data)
-                        db.session.commit()
+                        if events:
+                            # Add event to Events table
+                            ioc_data = Events(datetime.now(), ioc, events, 'Flashpoint', caseid)
+                            db.session.add(ioc_data)
+                            db.session.commit()
 
         return(message)

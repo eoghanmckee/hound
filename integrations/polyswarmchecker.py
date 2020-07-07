@@ -53,8 +53,9 @@ class PolySwarmchecker(object):
                                         message += event
                                         events += event
 
-                                        # Add event to Events table
-                                        ioc_data = Events(datetime.now(), ioc, events, 'PolySwarm', caseid)
-                                        db.session.add(ioc_data)
-                                        db.session.commit()
+                    if events:
+                        # Add event to Events table
+                        ioc_data = Events(datetime.now(), ioc, events, 'PolySwarm', caseid)
+                        db.session.add(ioc_data)
+                        db.session.commit()
         return(message)

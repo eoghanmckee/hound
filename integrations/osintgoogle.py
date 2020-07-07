@@ -53,8 +53,9 @@ class OSINTGoogle(object):
                                 db.session.add(iocmatch)
                                 db.session.commit()
 
-                                # Add event to Events table
-                                ioc_data = Events(datetime.now(), ioc, events, 'OSINT(Google)', caseid)
-                                db.session.add(ioc_data)
-                                db.session.commit()
+                    if events:
+                        # Add event to Events table
+                        ioc_data = Events(datetime.now(), ioc, events, 'OSINT(Google)', caseid)
+                        db.session.add(ioc_data)
+                        db.session.commit()
         return(message)

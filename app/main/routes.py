@@ -93,99 +93,89 @@ def edit(id):
         if slackwebhook:
             form.slackwebhook.data = str(slackwebhook.slackwebhook)
 
+        names_string, usernames_string, userids_string, emails_string, phones_string, \
+        ips_string, domains_string, urls_string, btcaddresses_string, sha256s_string, \
+        sha1s_string, md5s_string, filenames_string, keywords_string = ('' for i in range(14))
+
         # get names
-        names_string = ''
         names = Names.query.filter_by(caseid=id).all()
         for name in names:
             names_string += str(name.indicator) + ', '
         form.names.data = names_string[:-2] # removing the last comma and trailing space
 
         # get usernames
-        usernames_string = ''
         usernames = Usernames.query.filter_by(caseid=id).all()
         for username in usernames:
             usernames_string += str(username.indicator) + ', '
         form.usernames.data = usernames_string[:-2]
 
         # get userids
-        userids_string = ''
         userids = UserIDs.query.filter_by(caseid=id).all()
         for userid in userids:
             userids_string += str(userid.indicator) + ', '
         form.userids.data = userids_string[:-2]
 
         # get emails
-        emails_string = ''
         emails = Emails.query.filter_by(caseid=id).all()
         for email in emails:
             emails_string += str(email.indicator) + ', '
         form.emails.data = emails_string[:-2]
 
         # get phones
-        phones_string = ''
         phones = Phones.query.filter_by(caseid=id).all()
         for phone in phones:
             phones_string += str(phone.indicator) + ', '
         form.phones.data = phones_string[:-2]
 
         # get ips
-        ips_string = ''
         ips = IPaddresses.query.filter_by(caseid=id).all()
         for ip in ips:
             ips_string += str(ip.indicator) + ', '
         form.ips.data = ips_string[:-2]
 
         # get domains
-        domains_string = ''
         domains = Domains.query.filter_by(caseid=id).all()
         for domain in domains:
             domains_string += unquote(domain.indicator) + ', '
         form.domains.data = domains_string[:-2]
 
         # get urls
-        urls_string = ''
         urls = Urls.query.filter_by(caseid=id).all()
         for url in urls:
             urls_string += unquote(url.indicator) + ', '
         form.urls.data = urls_string[:-2]
 
         # get btcaddresses
-        btcaddresses_string = ''
         btcaddresses = BTCAddresses.query.filter_by(caseid=id).all()
         for btcaddress in btcaddresses:
             btcaddresses_string += str(btcaddress.indicator) + ', '
         form.btcaddresses.data = btcaddresses_string[:-2]
 
         # get sha256
-        sha256s_string = ''
         sha256s = Sha256.query.filter_by(caseid=id).all()
         for sha256 in sha256s:
             sha256s_string += str(sha256.indicator) + ', '
         form.sha256.data = sha256s_string[:-2]
 
         # get sha1
-        sha1s_string = ''
         sha1s = Sha1.query.filter_by(caseid=id).all()
         for sha1 in sha1s:
             sha1s_string += str(sha1.indicator) + ', '
         form.sha1.data = sha1s_string[:-2]
 
         # get md5
-        md5s_string = ''
         md5s = Md5.query.filter_by(caseid=id).all()
         for md5 in md5s:
             md5s_string += str(md5.indicator) + ', '
         form.md5.data = md5s_string[:-2]
 
         # get filenames
-        filenames_string = ''
         filenames = Filenames.query.filter_by(caseid=id).all()
         for filename in filenames:
             filenames_string += str(filename.indicator) + ', '
         form.filenames.data = filenames_string[:-2]
 
         # get keywords
-        keywords_string = ''
         keywords = Keywords.query.filter_by(caseid=id).all()
         for keyword in keywords:
             keywords_string += str(keyword.indicator) + ', '
@@ -213,6 +203,37 @@ def edit(id):
         if new_slackwebhook != existing_slackwebhook and current_userid.id != case.user_id:
            slack_message = 'WARNING: Slack Webhook changed for {}\'s case, \'{}\', by user {}'.format(case_owner.email, case.casename, current_user.email)
            Slackmessenger().insidermessenger(slack_message)
+
+        # # makes update changes without deleting the whole case...
+        # # 1. get array/list of current IOCs
+        # name_list, username_list, userid_list, email_list, phone_list, \
+        # ipaddress_list, domain_list, url_list, btcaddress_list, sha256_list, \
+        # sha1_list, md5_list, filename_list, keyword_list = ([] for i in range(14))
+
+        # # get names
+        # names = Names.query.filter_by(caseid=id).all()
+        # for name in names:
+        #     name_list.append(name.indicator)
+
+        # # 2. get array/list of new IOCs
+        # name_indicators = request.form['names']
+        # name_indicators = name_indicators.split(",")
+        # name_indicators = [x.strip(' ') for x in name_indicators]
+
+        # # 3. if new list ioc not in old ioc list, add
+        # for i in name_indicators:
+        #     if i not in name_list:
+        #         new_name = Names(i, id)
+        #         db.session.add(new_name)
+        #         db.session.commit()
+
+        # # 4. if iocs in old list not in new list, delete
+        # for k in name_list:
+        #     if k not in name_indicators:
+        #         present = Names.query.filter_by(caseid=id, indicator=k)
+        #         if present:
+        #             Names.query.filter_by(caseid=id, indicator=k).delete()
+        #             db.session.commit()
 
         # delete all case iocs prior to updating the case - yep, i know
         deleteiocsHelper(id)

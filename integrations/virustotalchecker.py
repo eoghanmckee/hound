@@ -65,6 +65,7 @@ class VirusTotalchecker(object):
                                     message += event
                                     events += event
 
+                            if events:
                                 # Add event to Events table
                                 ioc_data = Events(datetime.now(), ioc, events, 'Virustotal', caseid)
                                 db.session.add(ioc_data)

@@ -20,6 +20,10 @@ class Config(object):
         CONFIG['POSTGRES_PASSWORD'],
         CONFIG['POSTGRES_HOST'],
         CONFIG['POSTGRES_DB'])
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        "pool_recycle": 1800,
+        "pool_pre_ping": True
+    }
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     CASE_BASEURL = 'http://localhost:8080/edit/'
