@@ -5,13 +5,10 @@ from app.models import Cases, Names, Usernames, UserIDs, \
     Sha256, Sha1, Md5, Filenames, Keywords
 
 def searchHelper(form, search_term):
-
     search_results = []
     prelim_results = []
     ioc_types = ['Names', 'Usernames', 'UserIDs', 'Phones', 'Emails', 'Keywords', 'IPaddresses', 'Domains',\
     'Urls', 'BTCAddresses', 'Sha256', 'Sha1', 'Md5', 'Filenames']
-
-    # search_term_fuzzy = "%{}%".format(search_term)
 
     search_results += Cases.query.filter(Cases.casename.like("%" + search_term + "%")).all()
     for ioc_type in ioc_types:
