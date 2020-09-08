@@ -10,7 +10,6 @@ class Postgreschecker(object):
 			self.app = create_app()
 
 	def ioc_checker(self, all_iocs, connection, caseid):
-
 		# SQL query string declarations
 		# If you do not want a query executed for a given indicator type, leave it as an empty string
 		sql_str_matching = {
