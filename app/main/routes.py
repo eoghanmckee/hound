@@ -282,13 +282,13 @@ def edit(id):
         flashmessage = \
                 'Case "{}" deleted'.format(case.casename)
 
+        Events.query.filter_by(caseid=id).delete()
+        db.session.commit()
+
+        IOCMatches.query.filter_by(caseid=id).delete()
+        db.session.commit()
+
         Cases.query.filter_by(id=id).delete()
-        db.session.commit()
-
-        Events.query.filter_by(id=id).delete()
-        db.session.commit()
-
-        IOCMatches.query.filter_by(id=id).delete()
         db.session.commit()
 
         flash(flashmessage)

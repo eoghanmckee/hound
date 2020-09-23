@@ -106,6 +106,15 @@
     </div>
     <div class="col-xs-4 col-sm-4">
       <section>
+        <h2>Case Details</h2>
+        <p><b>Status:</b>
+          {% if case.status==0 %}<font color="#d9534f"><b>Inactive</b></font>{%endif %}
+          {% if case.status==1 %}<font color="#64a19d"><b>Active</b></font>{%endif %}
+        </p>
+        <p><b>Creator:</b> {{ case.creator }}</p>
+        <p><b>Creation Date:</b> {{ case.createdate }}</p>
+      </section>
+      <section>
         <h2>Notes</h2>
         <form action="" method="post">
           {{ notesform.hidden_tag() }}
