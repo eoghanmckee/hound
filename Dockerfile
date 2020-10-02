@@ -5,29 +5,28 @@ RUN adduser -D hound
 WORKDIR /home/hound
 
 COPY requirements.txt requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install gunicorn pymysql
 
-RUN apk update && \
-    apk add --virtual build-deps gcc musl-dev && \
-    apk add postgresql-dev
+RUN apk -U upgrade && \
+    apk add --no-cache postgresql-libs postgresql-client && \
+    apk add --virtual build-deps postgresql-dev gcc musl-dev tzdata && \
+    pip install --upgrade --no-cache-dir pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    cp -f /usr/share/zoneinfo/UTC /etc/localtime && \
+    echo 'UTC' >/etc/timezone && \
+    apk --purge del build-deps
 
-RUN apk add --update
-RUN apk --update add postgresql-client
-RUN pip install psycopg2
+COPY --chown=hound:hound app app
+COPY --chown=hound:hound config config
+COPY --chown=hound:hound migrations migrations
+COPY --chown=hound:hound integrations integrations
+COPY --chown=hound:hound *.py *.sh ./
 
-COPY app app
-COPY config config
-COPY migrations migrations
-COPY integrations integrations
-COPY *.py ./
-COPY *.sh ./
-RUN mkdir -p db
-RUN chmod a+x boot.sh
+RUN mkdir -p db && \
+    chmod a+x boot.sh && \
+    chown -R hound:hound ./
 
 ENV FLASK_APP hound.py
 
-RUN chown -R hound:hound ./
 USER hound
 
 EXPOSE 5000
